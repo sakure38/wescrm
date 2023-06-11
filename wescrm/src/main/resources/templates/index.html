@@ -1,0 +1,104 @@
+
+<@override name="title">SCRM-后台管理</@override>
+
+<@override name="content">
+	<div class="panel panel-default ux-panel">
+	    <div class="panel-heading">
+	        <h3 class="panel-title">销售排行榜</h3>
+	    </div>
+	    
+	    <div class="panel-body">
+	        <div id="main" style="width: 100%;height:500px;"></div>
+	    </div>
+	</div>
+		
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('main'));
+        option = {
+        	    tooltip: {
+        	        trigger: 'axis',
+        	        axisPointer: {            // Use axis to trigger tooltip
+        	            type: 'shadow'        // 'shadow' as default; can also be 'line' or 'shadow'
+        	        }
+        	    },
+        	    legend: {
+        	        data: ['消费榜', '佣金榜', '积分榜', '拉新榜']
+        	    },
+        	    grid: {
+        	        left: '3%',
+        	        right: '4%',
+        	        bottom: '3%',
+        	        containLabel: true
+        	    },
+        	    xAxis: {
+        	        type: 'value'
+        	    },
+        	    yAxis: {
+        	        type: 'category',
+        	        data: ${(salers)!},
+        	    },
+        	    series: [
+        	        {
+        	            name: '消费榜',
+        	            type: 'bar',
+        	            stack: 'total',
+        	            label: {
+        	                show: true
+        	            },
+        	            emphasis: {
+        	                focus: 'series'
+        	            },
+        	            data: ${(moneyArr)!}
+        	        },
+        	        {
+        	            name: '佣金榜',
+        	            type: 'bar',
+        	            stack: 'total',
+        	            label: {
+        	                show: true
+        	            },
+        	            emphasis: {
+        	                focus: 'series'
+        	            },
+        	            data: ${(rebateMoneyArr)!}
+        	        },
+        	        
+        	        {
+        	            name: '积分榜',
+        	            type: 'bar',
+        	            stack: 'total',
+        	            label: {
+        	                show: true
+        	            },
+        	            emphasis: {
+        	                focus: 'series'
+        	            },
+        	            data: ${(pointArr)!}
+        	        },
+        	        {
+        	            name: '拉新榜',
+        	            type: 'bar',
+        	            stack: 'total',
+        	            label: {
+        	                show: true
+        	            },
+        	            emphasis: {
+        	                focus: 'series'
+        	            },
+        	            data: ${(newUserArr)!}
+        	        }
+        	    ]
+        	};
+        
+        
+        myChart.on('legendselectchanged', function (params) {
+            window.location.href='${base}/salers?orderField='+params.name;
+        });
+        myChart.setOption(option);
+    </script>
+	
+</@override>
+
+<!-- extends要写在最后 -->
+<@extends name="_base.html"/>
+

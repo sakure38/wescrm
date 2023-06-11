@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/category/category",
+    "pages/user/user",
+    "pages/product/product",
+    "pages/payment/payment",
+    "pages/orders/orders",
+    "pages/orderdetail/orderdetail",
+    "pages/userSetting/userSetting",
+    "pages/cash/cash",
+    "pages/werun/werun"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#efefef",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "wescrm分销",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#8a8a8a",
+    "selectedColor": "#337ab7",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/icon/index.png",
+        "selectedIconPath": "images/icon/indexSelected.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "iconPath": "images/icon/category.png",
+        "selectedIconPath": "images/icon/categorySelected.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "images/icon/user.png",
+        "selectedIconPath": "images/icon/userSelected.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

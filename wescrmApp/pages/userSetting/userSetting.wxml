@@ -1,0 +1,82 @@
+
+<view class="container">
+  <view class="user-header">
+    <open-data class="user-avatar" type="userAvatarUrl"></open-data>
+  </view>
+
+  <view class="form-panel">
+    <form bindsubmit="doSubmit">
+      
+      <view class="form-group">
+        <text class="form-label">姓名：</text>
+        <input class="form-control" name="name" value="{{userInfo.name}}" />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">手机号：</text>
+        <input class="form-control"  name="mobile" value="{{userInfo.mobile}}"/>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">微信号：</text>
+        <input class="form-control"  name="wxid"  value="{{userInfo.wxid}}"/>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">邮箱：</text>
+        <input class="form-control"  name="email"  value="{{userInfo.email}}"/>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">证件类型：</text>
+        <view class="form-control">
+          <picker bindchange="bindCardTypeChange" value="{{index}}" range="{{cards}}">
+            <view>{{card}}</view>
+          </picker>
+        </view>
+        <image class="form-btn" src="../../images/icon/arrow-r1.png" mode="scaleToFill"></image>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">证件号：</text>
+        <input class="form-control" name="cardNo" value="{{userInfo.cardNo}}"/>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">银行：</text>
+        <view class="form-control">
+          <picker bindchange="bindBankChange" value="{{index}}" range="{{banks}}">
+            <view>{{bank}}</view>
+          </picker>
+        </view>
+        <image class="form-btn" src="../../images/icon/arrow-r1.png" mode="scaleToFill"></image>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">银行卡号：</text>
+        <input class="form-control" name="bankNo" value="{{userInfo.bankNo}}"/>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">上级：</text>
+        <text class="control-label">{{userInfo.parentName}}</text>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">佣金级别：</text>
+        <text class="control-label">{{userInfo.rebateTypeName}}</text>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">会员级别：</text>
+        <text class="control-label">{{userInfo.levelName}}</text>
+      </view>
+
+      <view style="margin-top:50rpx;">
+        <button style="width:100%"  type="primary" form-type="submit">保 存</button>
+      </view>
+
+    </form>
+  </view>
+
+</view>

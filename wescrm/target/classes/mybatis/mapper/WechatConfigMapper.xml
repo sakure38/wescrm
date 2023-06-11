@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.we.scrm.dao.WechatConfigDao">
+
+	<resultMap id="bean_map" type="com.we.scrm.domain.WechatConfig" >
+		<result column="id" property="id"  jdbcType="INTEGER" />
+		<result column="wid" property="wid"  jdbcType="VARCHAR" />
+		<result column="name" property="name"  jdbcType="VARCHAR" />
+		<result column="appid" property="appid"  jdbcType="VARCHAR" />
+		<result column="appsecret" property="appsecret"  jdbcType="VARCHAR" />
+		<result column="url" property="url"  jdbcType="VARCHAR" />
+		<result column="token" property="token"  jdbcType="VARCHAR" />
+		<result column="corpid" property="corpid"  jdbcType="VARCHAR" />
+		<result column="agentid" property="agentid"  jdbcType="VARCHAR" />
+		<result column="corsecret" property="corsecret"  jdbcType="VARCHAR" />
+		<result column="mappid" property="mappid"  jdbcType="VARCHAR" />
+		<result column="mappsecret" property="mappsecret"  jdbcType="VARCHAR" />
+		<result column="userid" property="userid"  jdbcType="INTEGER" />
+		<result column="createAt" property="createAt"  jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="all_columns">
+		id, wid, name, appid, appsecret, url, token, corpid, agentid, corsecret, mappid, mappsecret, userid, createAt
+	</sql>
+
+	<select id="getWechatConfig" parameterType="com.we.scrm.domain.WechatConfig" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM wechat_config
+	</select>
+
+	<select id="queryAll" parameterType="com.we.scrm.domain.WechatConfig" resultMap="bean_map">
+		SELECT 
+		<include refid="all_columns"  />
+		FROM wechat_config
+		ORDER BY id DESC
+	</select>
+
+	<select id="getTotalItemsCount" parameterType="com.we.scrm.domain.WechatConfig" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM wechat_config
+	</select>
+
+	<select id="queryPage" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM wechat_config
+		ORDER BY id DESC
+		LIMIT #{param2.startIndex} , #{param2.pageSize} 
+	</select>
+
+	<select id="getById" parameterType="java.lang.Long" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM wechat_config
+		WHERE id = #{id}
+	</select>
+
+	<insert id="create" parameterType="com.we.scrm.domain.WechatConfig" flushCache="true"  useGeneratedKeys="true" keyProperty="id"  >
+		INSERT INTO wechat_config
+		( id,wid,name,appid,appsecret,url,token,corpid,agentid,corsecret,mappid,mappsecret,userid,createAt ) 
+		VALUES 
+		( #{id},#{wid},#{name},#{appid},#{appsecret},#{url},#{token},#{corpid},#{agentid},#{corsecret},#{mappid},#{mappsecret},#{userid},#{createAt} ) 
+	</insert>
+
+	<update id="update" parameterType="com.we.scrm.domain.WechatConfig" flushCache="true">
+		UPDATE wechat_config
+		<trim prefix="SET" suffixOverrides="," > 
+			<if test="wid != null ">
+			wid = #{wid, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null ">
+			name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="appid != null ">
+			appid = #{appid, jdbcType=VARCHAR},
+			</if>
+			<if test="appsecret != null ">
+			appsecret = #{appsecret, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null ">
+			url = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="token != null ">
+			token = #{token, jdbcType=VARCHAR},
+			</if>
+			<if test="corpid != null ">
+			corpid = #{corpid, jdbcType=VARCHAR},
+			</if>
+			<if test="agentid != null ">
+			agentid = #{agentid, jdbcType=VARCHAR},
+			</if>
+			<if test="corsecret != null ">
+			corsecret = #{corsecret, jdbcType=VARCHAR},
+			</if>
+			<if test="mappid != null ">
+			mappid = #{mappid, jdbcType=VARCHAR},
+			</if>
+			<if test="mappsecret != null ">
+			mappsecret = #{mappsecret, jdbcType=VARCHAR},
+			</if>
+			<if test="userid != null ">
+			userid = #{userid, jdbcType=INTEGER},
+			</if>
+		</trim>
+		WHERE id = #{id} 
+	</update>
+
+	<delete id="delete" parameterType="com.we.scrm.domain.WechatConfig" >
+		DELETE FROM wechat_config
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

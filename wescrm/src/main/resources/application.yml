@@ -1,0 +1,29 @@
+
+#tomcat configuration
+server:
+  port: 8882
+
+#freemarker config
+spring:
+  freemarker:
+    cache: false
+    checkTemplateLocation: true
+    contentType: text/html
+    suffix: .html
+    templateEncoding: UTF-8
+    templateLoaderPath: classpath:/templates
+
+  datasource:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/wescrm?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: 123456
+
+mybatis:
+  type-aliases-package: com.we.scrm
+  config-locations: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+logging:
+  level:
+    com.we.scrm.dao: debug

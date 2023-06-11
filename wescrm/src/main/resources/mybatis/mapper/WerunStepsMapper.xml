@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.we.scrm.dao.WerunStepsDao">
+
+	<resultMap id="bean_map" type="com.we.scrm.domain.WerunSteps" >
+		<result column="id" property="id"  jdbcType="INTEGER" />
+		<result column="openid" property="openid"  jdbcType="VARCHAR" />
+		<result column="year" property="year"  jdbcType="INTEGER" />
+		<result column="month" property="month"  jdbcType="INTEGER" />
+		<result column="dates" property="dates"  jdbcType="INTEGER" />
+		<result column="steps" property="steps"  jdbcType="INTEGER" />
+		<result column="kill_steps" property="killSteps"  jdbcType="INTEGER" />
+		<result column="createAt" property="createAt"  jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="all_columns">
+		id, openid, year, month, dates, steps, kill_steps, createAt
+	</sql>
+
+	<select id="getTodayStep" parameterType="com.we.scrm.domain.WerunSteps" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM werun_steps
+		WHERE openid = #{openid}
+		AND year = #{year}
+		AND month = #{month}
+		AND dates = #{dates}
+	</select>
+
+	<select id="queryAll" parameterType="com.we.scrm.domain.WerunSteps" resultMap="bean_map">
+		SELECT 
+		<include refid="all_columns"  />
+		FROM werun_steps
+		ORDER BY id DESC
+	</select>
+
+	<select id="getTotalItemsCount" parameterType="com.we.scrm.domain.WerunSteps" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM werun_steps
+	</select>
+
+	<select id="queryPage" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM werun_steps
+		ORDER BY id DESC
+		LIMIT #{param2.startIndex} , #{param2.pageSize} 
+	</select>
+
+	<select id="getById" parameterType="java.lang.Long" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM werun_steps
+		WHERE id = #{id}
+	</select>
+
+	<insert id="create" parameterType="com.we.scrm.domain.WerunSteps" flushCache="true"  useGeneratedKeys="true" keyProperty="id"  >
+		INSERT INTO werun_steps
+		( id,openid,year,month,dates,steps,kill_steps,createAt ) 
+		VALUES 
+		( #{id},#{openid},#{year},#{month},#{dates},#{steps},#{killSteps},#{createAt} ) 
+	</insert>
+
+	<update id="update" parameterType="com.we.scrm.domain.WerunSteps" flushCache="true">
+		UPDATE werun_steps
+		<trim prefix="SET" suffixOverrides="," > 
+			<if test="openid != null ">
+			openid = #{openid, jdbcType=VARCHAR},
+			</if>
+			<if test="year != null ">
+			year = #{year, jdbcType=INTEGER},
+			</if>
+			<if test="month != null ">
+			month = #{month, jdbcType=INTEGER},
+			</if>
+			<if test="dates != null ">
+			dates = #{dates, jdbcType=INTEGER},
+			</if>
+			<if test="steps != null ">
+			steps = #{steps, jdbcType=INTEGER},
+			</if>
+			<if test="killSteps != null ">
+			kill_steps = #{killSteps, jdbcType=INTEGER},
+			</if>
+		</trim>
+		WHERE id = #{id} 
+	</update>
+
+	<delete id="delete" parameterType="com.we.scrm.domain.WerunSteps" >
+		DELETE FROM werun_steps
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

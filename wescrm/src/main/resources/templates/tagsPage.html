@@ -1,0 +1,178 @@
+
+<@override name="content">
+<div class="panel panel-default ux-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">标签管理</h3>
+    </div>
+    <div class="panel-body">
+        <form id="_queryPageForm">
+
+            <div class="col-sm-3">
+                <input type="text" name="content" class="form-control" placeholder="输入内容搜索标签" value="${(queryEntity.content)!}"/>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="doSearch()">搜索</button>
+
+            <div class="ux-table-div" >
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th>标签ID</th>
+                        <th>标签</th>
+                        <th>类型</th>
+                        <th>创建时间</th>
+                        <th>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">添加</button>
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <#if (page.items)??>
+                    <#list page.items as item>
+                    <tr>
+                        <td>${(item.id)!}</td>
+                        <td>${(item.content)!}</td>
+                        <td><label class="label label-${(item.type)!}">${(item.typeName)!}</label></td>
+                        <td>
+                            <#if (item.createAt)??>
+                            ${item.createAt?string('yyyy-MM-dd HH:mm')}
+                            </#if>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="doEdit(${(item.id)!})">修改</a>
+                            <a href="javascript:void(0)" onclick="doDelete(${(item.id)!})" style="margin-left:15px;">删除</a>
+                        </td>
+                    </tr>
+                    </#list>
+                </#if>
+                </tbody>
+            </table>
+        </div>
+
+        <#if (page.pageTotalCount)?? && page.pageTotalCount gt 1>
+            <ul class="pagination">
+                <input type="hidden" id="_id_pageNum" name="pageNum" value="${page.pageNum}"/>
+                <#list page.showNums as n>
+                    <#if page.showDot && n_index == 6>
+                    <li class="disabled"><a href="javascript:void(0)">...</a></li>
+                    </#if>
+                    <#if page.pageNum == n>
+                    <li class="active"><a href="javascript:void(0);">${n}</a></li>
+                    <#else>
+                    <li><a href="javascript:void(0);" onclick="_queryPage('${n}');">${n}</a></li>
+                    </#if>
+                </#list>
+            </ul>
+        </#if>
+
+    </form>
+    </div>
+</div>
+
+<!-- modal start -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" style="margin-top:5%;" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">标签添加/修改</h4>
+            </div>
+            <div class="modal-body">
+                <form id="myForm" class="form-horizontal" role="form" action="${base}/tags/merge" method="POST">
+                    <input type="hidden" name="id" /><!-- for update -->
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">标签</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" id="content" name="content" type="text" placeholder="请填写标签">
+                        </div>
+                        <span class="help-block">标签不能为空</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">类型</label>
+                        <div class="col-sm-6">
+                            <select name="type" class="form-control">
+                                <#list tagsType as key, value>
+                                <option value="${key}">${value}</option>
+                                </#list>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="_osAlertTip"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="doSubmit()">保存</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-modal -->
+
+<script type="text/javascript">
+    function doSubmit(){
+        var content = $('#content').val();
+		if(_os.isEmpty(content)){
+			Modal.tipFailure("内容不能为空");
+			return;
+		}
+		$('#myForm').ajaxSubmit({
+			datatype : 'json',
+			success : function(resp) {
+				var resp = $.parseJSON(resp);
+				if (resp.errcode == 0) {
+					_queryPage();
+				} else {
+					Modal.tipFailure(resp.message);//失败提示
+				}
+			},
+			error: function(){
+				Modal.tipFailure('保存失败');
+            }
+		});
+    }
+
+    //修改
+    function doEdit(id){
+		$.ajax({
+			url:'${base}/tags/get',
+		    type:'POST',
+		    dataType:'json',
+		    data:{"id":id},
+		    success:function(resp){
+		    	var errcode = resp.errcode;
+		    	if(errcode == 0){
+		    		$("#myForm").fill(resp.data);
+		    		$('#myModal').modal('show');
+		    	}
+		    }
+		});
+	}
+
+	function doDelete(id){
+	    Modal.confirm('确定删除?',function(type){
+			$.ajax({
+				url:'${base}/tags/delete',
+			    type:'POST',
+			    dataType:'json',
+			    data:{"id":id},
+			    success:function(resp){
+			    	var errcode = resp.errcode;
+			    	if(errcode == 0){
+			    		_queryPage();
+			    	}else{
+			    		Modal.alert("删除失败");
+			    	}
+			    }
+			});
+		});
+	}
+
+</script>
+
+</@override>
+
+<!-- extends 一定要写在页面最下方 -->
+<@extends name="_base.html"/>

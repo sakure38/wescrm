@@ -1,0 +1,53 @@
+<view class="container">
+  <view class="section address" bindtap="bindAddressChange">
+    
+    <view wx:if="{{address.userName}}">
+      <view class="top">{{address.userName}}{{address.telNumber}}</view>
+      <view class="bot">{{address.cityName}}{{address.countryName}}{{address.detailInfo}}</view>
+    </view>
+    <view wx:else >请选择地址</view>
+
+    <image class="btn" src="../../images/icon/arrow-r1.png" mode="scaleToFill"></image>
+  </view>
+
+  <view class="section date">
+    <picker mode="date" bindchange="bindDateChange">
+      <view class="item">
+        配送时间： <text>{{date}}</text>
+      </view>
+    </picker>
+    <image class="btn" src="../../images/icon/arrow-r1.png" mode="scaleToFill"></image>
+  </view>
+
+  <view class="section pros">
+    <view wx:if="{{product}}"  class="pro">
+        <image src="{{contextUrl}}/file/attachment/{{product.picture}}/l" mode="aspectFill"/>
+        <view class="pro-r">
+          <view class="name">{{product.name}}</view>
+          <view class="bot">
+            <text class="price">￥{{product.price}}</text>
+            <text class="count">数量：{{count}}份</text>
+          </view>
+        </view>
+      </view>
+  </view>
+
+  <view class="section price">
+    <view class="total">实付金额：<text>￥{{total}}</text></view>
+  </view>
+  
+  <view class="section">
+    <label for="remark">订单备注：</label>
+    <input name="remark" placeholder="请输入备注" bindinput="bindRemarkInput"/>
+  </view>
+
+  <view class="section">
+    <label for="invoice">发票抬头：</label>
+    <input name="invoice" placeholder="请输入发票抬头"  bindinput="bindInvoiceInput"/>
+  </view>
+
+<view class="fix">
+  <button class="left"  bindtap="wechatPay">货到付款</button>
+    <button class="right" bindtap="wechatPay">微信支付</button>
+  </view>
+</view>

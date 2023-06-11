@@ -1,0 +1,276 @@
+
+<@override name="content">
+<div class="panel panel-default ux-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">客户信息</h3>
+    </div>
+
+    <div class="panel-body">
+
+        <form id="myForm" class="form-horizontal ux-form" role="form" action="${base}/customer/doMerge" method="POST">
+            <input type="hidden" name="id" value="${(entity.id)!}" />
+            <div class="form-group ux-form-group">
+                <label class="col-sm-2 control-label ux-form-label">姓名</label>
+                <div class="col-sm-4">
+                    <label class="control-label "><span>${(entity.name)!}</span></label>
+                </div>
+
+                <label class="col-sm-2 control-label ux-form-label">上级</label>
+                <div class="col-sm-4">
+                    <label class="control-label"><span>${(entity.parentName)!}</span></label>
+                </div>
+            </div>
+
+            <div class="form-group ux-form-group">
+                <label class="col-sm-2 control-label ux-form-label">性别</label>
+                <div class="col-sm-4">
+                    <label class="control-label"><span>${(entity.genderName)!}</span></label>
+                </div>
+                <label class="col-sm-2 control-label ux-form-label">生日</label>
+                <div class="col-sm-4">
+                    <label class="control-label">
+                        <#if (entity.birthday)??>
+                        <span>
+		    		${entity.birthday?string('yyyy-MM-dd')}
+		    		</span>
+                    </label>
+                </#if>
+            </div>
+    </div>
+
+    <div class="form-group ux-form-group">
+        <label class="col-sm-2 control-label ux-form-label">总订单金额</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.orderMoney)!}</span></label>
+        </div>
+        <label class="col-sm-2 control-label ux-form-label">总佣金</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.rebateMoney)!}</span></label>
+        </div>
+    </div>
+
+    <div class="form-group ux-form-group">
+        <label class="col-sm-2 control-label ux-form-label">用户余额</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.money)!}</span></label>
+        </div>
+        <label class="col-sm-2 control-label ux-form-label">积分</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.point)!}</span></label>
+        </div>
+    </div>
+
+    <div class="form-group ux-form-group">
+        <label class="col-sm-2 control-label ux-form-label">手机号</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.mobile)!}</span></label>
+        </div>
+        <label class="col-sm-2 control-label ux-form-label">微信ID</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.wxid)!}</span></label>
+        </div>
+    </div>
+
+    <div class="form-group ux-form-group">
+        <label class="col-sm-2 control-label ux-form-label">证件类型</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.card)!}</span></label>
+        </div>
+        <label class="col-sm-2 control-label ux-form-label">证件号码</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.cardNo)!}</span></label>
+        </div>
+    </div>
+    <div class="form-group ux-form-group">
+        <label class="col-sm-2 control-label ux-form-label">银行</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.bank)!}</span></label>
+        </div>
+        <label class="col-sm-2 control-label ux-form-label">银行卡号</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.bankNo)!}</span></label>
+        </div>
+    </div>
+
+    <div class="form-group ux-form-group">
+        <label class="col-sm-2 control-label ux-form-label">银行网点</label>
+        <div class="col-sm-4">
+            <label class="control-label"><span>${(entity.bankSite)!}</span></label>
+        </div>
+
+        <label class="col-sm-2 control-label ux-form-label">最新下单</label>
+        <div class="col-sm-4">
+            <label class="control-label">
+                <#if (entity.orderTime)??>
+                <span>
+		    		${entity.orderTime?string('yyyy-MM-dd HH:mm:ss')}
+		    		</span>
+            </#if>
+            </label>
+        </div>
+        </div>
+
+            <div class="form-group ux-form-group">
+                <label class="col-sm-2 control-label ux-form-label">Email</label>
+                <div class="col-sm-2">
+                    <label class="control-label"><span>${(entity.email)!}</span></label>
+                </div>
+            </div>
+
+            <div class="form-group ux-form-group">
+                <label class="col-sm-2 control-label ux-form-label">地址</label>
+                <div class="col-sm-4">
+                    <label class="control-label"><span>${(entity.address)!}</span></label>
+                </div>
+            </div>
+
+            <div class="form-group ux-form-group">
+                <label class="col-sm-2 control-label ux-form-label">会员等级</label>
+                <div class="col-sm-4">
+                    <select name="level" class="form-control" >
+                        <#list levels as key,value>
+                        <option value="${key}" <#if (entity.level)?? && (entity.level==key)>selected</#if> >${value}</option>
+                </#list>
+                </select>
+            </div>
+
+            <label class="col-sm-2 control-label ux-form-label">佣金等级</label>
+            <div class="col-sm-4">
+                <select name="rebateType" class="form-control" >
+                    <#list rebates as key,value>
+                    <option value="${key}" <#if (entity.rebateType)?? && (entity.rebateType==key)>selected</#if>>${value}</option>
+            </#list>
+            </select>
+        </div>
+        </div>
+
+        <div class="form-group ux-form-group">
+            <label class="col-sm-2 control-label ux-form-label" style="height:55px;">备注</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="" cols="50" name="remark" style="font-weight:normal">${(entity.remark)!}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group ux-form-group">
+            <label class="col-sm-2 control-label ux-form-label">标签</label>
+            <div class="col-sm-10">
+                <#list customerTags as item>
+                    <span class="label label-${item.tagType}">${item.tagContent}</span>
+                </#list>
+            <button style="margin-left:20px;" type="button" class="btn btn-default" onclick="editTags()">修改</button>
+            </div>
+        </div>
+
+        <div id="_osAlertTip"></div>
+
+        <div class="form-group" style="margin-top:20px;">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-primary" onclick="doSubmit()">保 存</button>
+                <button onclick="history.go(-1)" type="button" class="btn btn-default" style="margin-left:50px;">返 回</button>
+            </div>
+        </div>
+        </form>
+
+    </div><!-- panel-body end -->
+</div><!-- panel end -->
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" style="margin-top:5%;" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">修改标签</h4>
+            </div>
+            <div class="modal-body">
+                <form id="myForm" class="form-horizontal" role="form" action="${base}/tags/merge" method="POST">
+                    <div class="checkbox" id="tagsCheckbox">
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="doSubmit()">保存</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-modal -->
+
+<script type="text/javascript">
+    function doSubmit(){
+		$('#myForm').ajaxSubmit({
+			datatype : 'json',
+			success : function(resp) {
+				var resp = $.parseJSON(resp);
+				if (resp.errcode == 0) {
+					Modal.tipSuccess("保存成功");//显示模态框
+				} else {
+					Modal.tipFailure(resp.message);//显示模态框
+				}
+			},
+			error : function(xhr) {
+				Modal.tipFailure("保存失败");
+			}
+		});
+	}
+
+	function editTags(){
+	    var selected = [];
+	    <#list customerTags as item>
+	    selected.push(${item.tagId});
+	    </#list>
+
+        $('#tagsCheckbox').empty();
+        $.ajax({
+			url:'${base}/tags/all',
+		    type:'GET',
+		    dataType:'json',
+		    success:function(resp){
+		    	var errcode = resp.errcode;
+		    	if(errcode == 0){
+		    		$('#myModal').modal();
+		    		if(resp.data){
+		    			for(var i = 0;i < resp.data.length; i++){
+		    				var tag = resp.data[i];
+		    				var checked = ''
+		    				if(selected.includes(tag.id)){
+		    					checked = 'checked'
+		    				}
+		    				var html = '<label style="padding-left:25px;" class="checkbox-label label label-'+tag.type+'"> '
+		    				+ '<input name="checkTags" value="' + tag.id + '" type="checkbox" ' + checked + '> '+tag.content+'</label>';
+		    				$('#tagsCheckbox').append(html)
+		    			}
+		    		}
+		    	}else{
+		    		Modal.alert("获取失败");
+		    	}
+		    }
+		});
+	}
+
+	function doSubmit(){
+	    var chk_value = [];
+	    $('input[name="checkTags"]:checked').each(function(){
+	        chk_value.push($(this).val());
+	    });
+	    $.ajax({
+			url:'${base}/customer/saveTags',
+		    type:'POST',
+		    dataType:'json',
+		    data:{"tags": chk_value, id: '${(entity.id)!}' },
+		    success:function(resp){
+		        if(resp.errcode == 0){
+		            window.location.reload(true);
+		        }
+		    }
+        });
+	}
+
+</script>
+
+</@override>
+
+<!-- extends 一定要写在页面最下方 -->
+<@extends name="_base.html"/>

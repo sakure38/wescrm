@@ -1,0 +1,87 @@
+.banner{
+  height: 470rpx;
+}
+.name{
+  color: #282828;
+  padding: 24rpx;
+  position: relative;
+  border-bottom: 2rpx solid #efefef;
+}
+.name .desc{
+  font-size: 26rpx;
+}
+.name .title{
+  font-size: 34rpx;
+  padding-top: 10rpx;
+}
+.price{
+  margin-top:10rpx;
+  color: #bf0008;
+  font-size: 40rpx;
+}
+.tab{
+  padding: 24rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+.tab image{
+  width: 30rpx;
+  height: 30rpx;
+  position: relative;
+  top: 4rpx;
+  margin-right: 10rpx;
+}
+.tab-item{
+  width: 50%;
+  font-size: 28rpx;
+  padding-bottom: 10rpx;
+}
+.product-count{
+  padding: 24rpx;
+  border-bottom: 2rpx solid #efefef;
+}
+.product-count .title{
+    color: #282828;
+    font-size: 28rpx;
+    padding-bottom: 10rpx;
+}
+.count-select{
+    display: flex;
+}
+.s-item{
+    padding: 0 24rpx;
+    margin: 20rpx;
+    text-align: center;
+    height: 70rpx;
+    line-height: 70rpx;
+    font-size: 28rpx;
+    float: left;
+    margin-left: 0;
+    color: #ca3340;
+    border: 1px solid #ca3340;
+    background-color: #fff;
+}
+.active{
+    color: #fff;
+    border: 2rpx solid #ca3340;
+    background-color: #ca3340;
+}
+.detail{
+  margin-bottom: 100rpx;
+}
+.detail image{
+  width: 100%;
+  display: block;
+}
+.buy{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #fff;
+  background: #bf0008;
+  text-align: center;
+  font-size: 30rpx;
+}

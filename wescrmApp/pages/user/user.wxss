@@ -1,0 +1,85 @@
+
+.container{
+  background-color: #efefef;
+  height: 100vh;
+}
+.user-header{
+   width: 100%;
+   padding: 80rpx 0rpx;
+   background-image: linear-gradient(#b5d9f8, #efefef);
+   display: flex;
+   flex-direction: row;
+   align-content: center;
+}
+.user-avatar{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  overflow:hidden;
+  object-fit: cover;
+  display: block;
+  margin: 0px 40rpx;
+  border: 2rpx solid #FFF;
+}
+.user-info{
+  margin-top: 12rpx;
+}
+.user-nickname{
+  font-size: 36rpx;
+  letter-spacing: 3rpx;
+}
+.user-type{
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  background-color: #efefef;
+  border-radius: 15rpx;
+  padding:6rpx 20rpx;
+}
+
+.ux-panel{
+  background-color: #FFF;
+  width: 100%;
+  min-height:100rpx ;
+  border-radius: 20rpx;
+  display: block;
+  margin-bottom: 40rpx;
+  padding-bottom: 50rpx;
+}
+.panel-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-content: center;
+  flex-wrap: wrap;
+}
+.panel-content view{
+  width: 25%;
+  height: 80rpx;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  margin-top: 50rpx;
+}
+.panel-content text{
+  text-align: center;
+  display: block;
+}
+.panel-content .title{
+  margin-top:4rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+.ux-panel .panel-title {
+  font-weight: bold;
+  padding:40rpx 20rpx 0rpx 40rpx;
+}
+.ux-panel image{
+  width: 64rpx;
+  height: 64rpx;
+}
+.all-orders{
+  float:right;
+  font-weight:normal;
+  font-size:28rpx;
+  color: #999;
+}

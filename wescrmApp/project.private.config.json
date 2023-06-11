@@ -1,0 +1,56 @@
+{
+  "setting": {
+    "compileHotReLoad": true
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/category/category",
+          "pathName": "pages/category/category",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/product/product",
+          "pathName": "pages/product/product",
+          "query": "id=28",
+          "scene": null
+        },
+        {
+          "name": "pages/payment/payment",
+          "pathName": "pages/payment/payment",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/user/user",
+          "pathName": "pages/user/user",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/orders/orders",
+          "pathName": "pages/orders/orders",
+          "query": "status=3",
+          "scene": null
+        },
+        {
+          "name": "pages/userSetting/userSetting",
+          "pathName": "pages/userSetting/userSetting",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/werun/werun",
+          "pathName": "pages/werun/werun",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  },
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "projectname": "wescrmApp",
+  "libVersion": "2.32.1"
+}

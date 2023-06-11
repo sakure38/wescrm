@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.we.scrm.dao.AttachmentDao">
+
+	<resultMap id="bean_map" type="com.we.scrm.domain.Attachment" >
+		<result column="id" property="id"  jdbcType="BIGINT" />
+		<result column="height" property="height"  jdbcType="INTEGER" />
+		<result column="width" property="width"  jdbcType="INTEGER" />
+		<result column="resourceId" property="resourceId"  jdbcType="BIGINT" />
+		<result column="size" property="size"  jdbcType="BIGINT" />
+		<result column="userId" property="userId"  jdbcType="BIGINT" />
+		<result column="mime" property="mime"  jdbcType="VARCHAR" />
+		<result column="name" property="name"  jdbcType="VARCHAR" />
+		<result column="createAt" property="createAt"  jdbcType="TIMESTAMP" />
+		<result column="updateAt" property="updateAt"  jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="all_columns">
+		id, height, width, resourceId, size, userId, mime, name, createAt, updateAt
+	</sql>
+
+	<select id="queryAll" parameterType="com.we.scrm.domain.Attachment" resultMap="bean_map">
+		SELECT 
+		<include refid="all_columns"  />
+		FROM attachment
+		ORDER BY id DESC
+	</select>
+
+	<select id="getTotalItemsCount" parameterType="com.we.scrm.domain.Attachment" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM attachment
+	</select>
+
+	<select id="queryPage" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM attachment
+		ORDER BY id DESC
+		LIMIT #{param2.startIndex} , #{param2.pageSize} 
+	</select>
+
+	<select id="getById" parameterType="java.lang.Long" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM attachment
+		WHERE id = #{id}
+	</select>
+
+	<insert id="create" parameterType="com.we.scrm.domain.Attachment" flushCache="true"  useGeneratedKeys="true" keyProperty="id"  >
+		INSERT INTO attachment
+		( id,height,width,resourceId,size,userId,mime,name,createAt,updateAt ) 
+		VALUES 
+		( #{id},#{height},#{width},#{resourceId},#{size},#{userId},#{mime},#{name},#{createAt},#{updateAt} ) 
+	</insert>
+
+	<update id="update" parameterType="com.we.scrm.domain.Attachment" flushCache="true">
+		UPDATE attachment
+		<trim prefix="SET" suffixOverrides="," > 
+			<if test="height != null ">
+			height = #{height, jdbcType=INTEGER},
+			</if>
+			<if test="width != null ">
+			width = #{width, jdbcType=INTEGER},
+			</if>
+			<if test="resourceId != null ">
+			resourceId = #{resourceId, jdbcType=BIGINT},
+			</if>
+			<if test="size != null ">
+			size = #{size, jdbcType=BIGINT},
+			</if>
+			<if test="userId != null ">
+			userId = #{userId, jdbcType=BIGINT},
+			</if>
+			<if test="mime != null ">
+			mime = #{mime, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null ">
+			name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="updateAt != null ">
+			updateAt = #{updateAt, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		WHERE id = #{id} 
+	</update>
+
+	<delete id="delete" parameterType="com.we.scrm.domain.Attachment" >
+		DELETE FROM attachment
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

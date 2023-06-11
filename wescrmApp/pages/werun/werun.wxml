@@ -1,0 +1,41 @@
+
+<view class="container">
+  <view class="user-header">
+    <open-data class="user-avatar" type="userAvatarUrl"></open-data>
+  </view>
+
+  <view class="form-panel">
+    <form bindsubmit="doSubmit">
+      
+      <view class="form-group">
+        <text class="form-label">总步数：</text>
+        <text class="control-label">{{totalStep}}</text>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">今日步数：</text>
+        <text class="control-label">{{todayStep}}</text>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">兑换积分</text>
+        <input class="form-control"  name="pointStep"  value="{{totalStep}}" type="number"/>
+        <button type="primary" form-type="submit" style="width:180rpx;">兑 换</button>
+      </view>
+    </form>
+ </view>
+
+ <view class="form-panel" style="margin-top:60rpx;">
+      <form bindsubmit="doGiveFriendSubmit">
+        <view class="form-group">
+          <input class="form-control"  name="giveStep"  value="{{totalStep}}" type="number"/>
+          <button type="primary" form-type="submit" style="width:400rpx;">赠送步数给好友</button>
+        </view>
+      </form>
+  </view>
+
+  <view class="tips">
+    <view>兑换积分说明：100步 = 1积分</view>
+  </view>
+
+</view>

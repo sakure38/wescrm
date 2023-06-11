@@ -1,0 +1,85 @@
+
+<#assign base=springMacroRequestContext.getContextUrl("") />
+
+<!DOCTYPE html>
+<html lang="utf-8">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>SCRM-后台管理</title>
+
+    <!--css / js-->
+    <!-- 引入资源文件 -->
+    <link href="${base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${base}/res/css/bootstrap-treeview.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${base}/res/css/style.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${base}/res/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="${base}/res/js/jquery.form.js"></script>
+    <script type="text/javascript" src="${base}/res/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${base}/res/js/bootstrap-treeview.min.js"></script>
+    <script type="text/javascript" src="${base}/res/3rdparty/laydate/laydate.js"></script>
+    <script type="text/javascript" src="${base}/res/js/scrm.min.js"></script>
+    <script type="text/javascript" src="${base}/res/3rdparty/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="${base}/res/3rdparty/echarts/echarts.common.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container ux-container">
+        <div class="row">
+            <div class="col-xs-2 ux-nav-container">
+                <#include "_nav.html"/>
+            </div>
+
+            <div class="col-xs-10 ux-content-container">
+                <@block name="content">
+
+                </@block>
+            </div>
+        </div>
+    </div>
+
+    <!-- confirm/alert提示 -->
+    <div class="modal" id="_osDialogModal" tabindex="-1" role="dialog" style="margin-top:5%;" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog" style="width:400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">信息提示</h4>
+                </div>
+                <div class="modal-body">
+                    <div><span class="_osContent"></span></div>
+                </div>
+                <div class="modal-footer modal-center">
+                    <button type="button" class="btn btn-primary os-ok">确 定</button>
+                    <button type="button" class="btn btn-default os-cancel">取 消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- confirm/alert提示 end -->
+
+</body>
+
+<script type="text/javascript">
+	//公共：Modal隐藏的时候执行代码
+	$('#myModal').on('hidden.bs.modal', function () {
+		$("#myForm").clear();
+		Modal.tipHidden();//失败提示
+	})
+
+	function _queryPage(page){
+        if(page){
+            $('#_id_pageNum').val(page);
+        }
+        $('#_queryPageForm').submit();
+    }
+
+    function doSearch(){
+        $('#_queryPageForm').submit();
+    }
+</script>
+
+</html>

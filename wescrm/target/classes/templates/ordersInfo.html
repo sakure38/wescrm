@@ -1,0 +1,156 @@
+
+<@override name="content">
+<div class="panel panel-default ux-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">订单详情 - ${(entity.orderId)!}</h3>
+    </div>
+    
+    <div class="panel-body">
+    	
+    	<form class="form-horizontal ux-form" role="form">
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">订单ID</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label"><span>${(entity.orderId)!}</span></label>
+		    	</div>
+		    	
+		    	<label class="col-sm-2 control-label ux-form-label">客户ID</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label"><span>${(entity.customerId)!}</span></label>
+		    	</div>
+		    </div>
+		    <div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">商品ID</label>
+		    	<div class="col-sm-6">
+		    		<label class="control-label"><span>${(entity.productId)!}</span></label>
+		    	</div>
+		  	</div>
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">商品名称</label>
+		    	<div class="col-sm-6">
+		    		<label class="control-label"><span>${(entity.productName)!}</span></label>
+		    	</div>
+		  	</div>
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">商品数量</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label"><span>${(entity.productCount)!}</span></label>
+		    	</div>
+		    	<label class="col-sm-2 control-label ux-form-label">商品单价</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label"><span>${(entity.productPrice)!}</span></label>
+		    	</div>
+		    	<label class="col-sm-2 control-label ux-form-label">返佣比例</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label"><span>${(entity.productRebate)!}</span></label>
+		    	</div>
+		  	</div>
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">支付金额</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label"><span>${(entity.money)!}</span></label>
+		    	</div>
+		    	<label class="col-sm-2 control-label ux-form-label">支付方式</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label"><span>${(entity.payMethodName)!}</span></label>
+		    	</div>
+		    	<label class="col-sm-2 control-label ux-form-label">支付时间</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label">
+		    		<#if (entity.payTime)??>
+		    		<span>
+		    		${entity.payTime?string('yyyy-MM-dd HH:mm:ss')}
+		    		</span>
+		    		</#if>
+		    		</label>
+		    	</div>
+		  	</div>
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">订单状态</label>
+		    	<div class="col-sm-6">
+		    		<label class="control-label"><span>${(entity.statusName)!}</span></label>
+		    	</div>
+		  	</div>
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">使用积分</label>
+		    	<div class="col-sm-6">
+		    		<label class="control-label"><span>${(entity.point)!}</span></label>
+		    	</div>
+		  	</div>
+		  	
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">快递单号</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label"><span>${(entity.shippingSn)!}</span></label>
+		  		</div>
+		  	
+		    	<label class="col-sm-2 control-label ux-form-label">发货时间</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label">
+		    		<#if (entity.shippingTime)??>
+		    		<span>
+		    		${entity.shippingTime?string('yyyy-MM-dd HH:mm:ss')}
+		    		</span>
+		    		</#if>
+		    		</label>
+		    	</div>
+		    	
+		    	<label class="col-sm-2 control-label ux-form-label">收货时间</label>
+		    	<div class="col-sm-2">
+		    		<label class="control-label">
+		    		<span>
+		    		<#if (entity.receiveTime)??>
+		    		${entity.receiveTime?string('yyyy-MM-dd HH:mm:ss')}
+		    		</#if>
+		    		</span>
+		    		</label>
+		    	</div>
+		  	</div>
+		  	
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">发货地址</label>
+		    	<div class="col-sm-6">
+		    		<label class="control-label"><span>${(entity.address)!}</span></label>
+		    	</div>
+		  	</div>
+		  	
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">备注</label>
+		    	<div class="col-sm-6">
+		    		<label class="control-label"><span>${(entity.remark)!}</span></label>
+		    	</div>
+		  	</div>
+		  	
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">发票信息</label>
+		    	<div class="col-sm-6">
+		    		<label class="control-label"><span>${(entity.invoice)!}</span></label>
+		    	</div>
+		  	</div>
+		  	
+		  	<div class="form-group  ux-form-group">
+		    	<label class="col-sm-2 control-label ux-form-label">订单创建时间</label>
+		    	<div class="col-sm-6">
+		    		<label class="control-label">
+		    		<span>
+		    		${entity.createAt?string('yyyy-MM-dd HH:mm:ss')}
+		    		</span>
+		    		</label>
+		    	</div>
+		  	</div>
+		  	
+		  	<div class="form-group" style="margin-top:20px;">
+		    	<label class="col-sm-2 control-label"></label>
+		    	<div class="col-sm-6">
+		    	<button onclick="history.go(-1)" type="button" class="btn btn-default" style="margin-left:50px;">返 回</button>
+		    	</div>
+		    </div>
+			 
+		</form>
+    	
+    </div>
+    
+</div>
+</@override>
+
+<@extends name="_base.html" />

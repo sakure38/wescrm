@@ -1,0 +1,32 @@
+
+<view class="container">
+
+<view class="tab">
+  <view id="0" bindtap="changeTab" class="tab-item {{status==0?'active':''}}">全部</view>
+  <view id="1" bindtap="changeTab" class="tab-item {{status==1?'active':''}}">待付款</view>
+  <view id="3" bindtap="changeTab" class="tab-item {{status==3?'active':''}}">待发货</view>
+  <view id="4" bindtap="changeTab" class="tab-item {{status==4?'active':''}}">带收货</view>
+  <view id="5" bindtap="changeTab" class="tab-item {{status==5?'active':''}}">已完成</view>
+</view>
+
+<view class="list">
+  <block wx:for="{{orders}}" wx:key="key">
+    <navigator class="item" url="/pages/orderdetail/orderdetail?id={{item.id}}">
+      <view class="title">
+        <text class="float-r">总价：<text class="price">￥{{item.money}}元</text></text>
+      </view>
+      <view class="pros">
+        <view class="pro">
+          <image src="{{contextUrl}}/file/attachment/{{item.productPicture}}/l" mode="aspectFill"></image>
+          <view class="pro-r">
+            <view class="name">{{item.productName}}</view>
+            <view class="name">{{item.productCount}} 件</view>
+          </view>
+        </view>
+      </view>
+    </navigator>
+  </block>
+    
+</view>
+
+</view>

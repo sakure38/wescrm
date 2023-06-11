@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.we.scrm.dao.ProductDao">
+
+	<resultMap id="bean_map" type="com.we.scrm.domain.Product" >
+		<result column="id" property="id"  jdbcType="INTEGER" />
+		<result column="pid" property="pid"  jdbcType="VARCHAR" />
+		<result column="name" property="name"  jdbcType="VARCHAR" />
+		<result column="price" property="price"  jdbcType="DECIMAL" />
+		<result column="rebate" property="rebate"  jdbcType="DECIMAL" />
+		<result column="status" property="status"  jdbcType="INTEGER" />
+		<result column="picture" property="picture"  jdbcType="INTEGER" />
+		<result column="category" property="category"  jdbcType="INTEGER" />
+		<result column="category_name" property="categoryName"  jdbcType="VARCHAR" />
+		<result column="description" property="description"  jdbcType="VARCHAR" />
+		<result column="main_picture" property="mainPicture"  jdbcType="INTEGER" />
+		<result column="recommend" property="recommend"  jdbcType="INTEGER" />
+		<result column="createAt" property="createAt"  jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="all_columns">
+		id, pid, name, price, rebate, status, picture, category, category_name, description, main_picture, recommend, createAt
+	</sql>
+
+	<select id="queryAll" parameterType="com.we.scrm.domain.Product" resultMap="bean_map">
+		SELECT 
+		<include refid="all_columns"  />
+		FROM product
+		<where>
+			<if test="recommend != null">
+				AND recommend = #{recommend}
+			</if>
+			<if test="status != null">
+				AND status = #{status}
+			</if>
+		</where>
+		ORDER BY id DESC
+	</select>
+
+	<select id="getTotalItemsCount" parameterType="com.we.scrm.domain.Product" resultType="java.lang.Integer">
+		SELECT COUNT(id)
+		FROM product
+		<where>
+			<if test="@org.apache.commons.lang.StringUtils@isNotBlank(pid)">
+				AND pid = #{pid,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				AND status = #{status}
+			</if>
+			<if test="recommend != null">
+				AND recommend = #{recommend}
+			</if>
+			<if test="category != null">
+				AND category = #{category}
+			</if>
+		</where>
+	</select>
+
+	<select id="queryPage" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM product
+		<where>
+			<if test="@org.apache.commons.lang.StringUtils@isNotBlank(param1.pid)">
+				AND pid = #{param1.pid,jdbcType=VARCHAR}
+			</if>
+			<if test="param1.status != null">
+				AND status = #{param1.status}
+			</if>
+			<if test="param1.recommend != null">
+				AND recommend = #{param1.recommend}
+			</if>
+			<if test="param1.category != null">
+				AND category = #{param1.category}
+			</if>
+		</where>
+		ORDER BY id DESC
+		LIMIT #{param2.startIndex} , #{param2.pageSize} 
+	</select>
+
+	<select id="getById" parameterType="java.lang.Long" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM product
+		WHERE id = #{id}
+	</select>
+
+	<select id="getByPid" parameterType="java.lang.String" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM product
+		WHERE pid = #{pid}
+	</select>
+
+	<insert id="create" parameterType="com.we.scrm.domain.Product" flushCache="true"  useGeneratedKeys="true" keyProperty="id"  >
+		INSERT INTO product
+		( id,pid,name,price,rebate,status,picture,category,category_name,description,main_picture,recommend,createAt ) 
+		VALUES 
+		( #{id},#{pid},#{name},#{price},#{rebate},#{status},#{picture},#{category},#{categoryName},#{description},#{mainPicture},#{recommend},#{createAt} ) 
+	</insert>
+
+	<update id="update" parameterType="com.we.scrm.domain.Product" flushCache="true">
+		UPDATE product
+		<trim prefix="SET" suffixOverrides="," > 
+			<if test="pid != null ">
+			pid = #{pid, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null ">
+			name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="price != null ">
+			price = #{price, jdbcType=DECIMAL},
+			</if>
+			<if test="rebate != null ">
+			rebate = #{rebate, jdbcType=DECIMAL},
+			</if>
+			<if test="status != null ">
+			status = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="picture != null ">
+			picture = #{picture, jdbcType=INTEGER},
+			</if>
+			<if test="category != null ">
+			category = #{category, jdbcType=INTEGER},
+			</if>
+			<if test="categoryName != null ">
+			category_name = #{categoryName, jdbcType=VARCHAR},
+			</if>
+			<if test="description != null ">
+			description = #{description, jdbcType=VARCHAR},
+			</if>
+			<if test="mainPicture != null ">
+			main_picture = #{mainPicture, jdbcType=INTEGER},
+			</if>
+			<if test="recommend != null ">
+			recommend = #{recommend, jdbcType=INTEGER},
+			</if>
+		</trim>
+		WHERE id = #{id} 
+	</update>
+
+	<update id="updateStatus" parameterType="com.we.scrm.domain.Product" flushCache="true">
+		UPDATE product
+		SET status = #{status, jdbcType=INTEGER}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="com.we.scrm.domain.Product" >
+		DELETE FROM product
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

@@ -1,0 +1,62 @@
+/* pages/orderdetail/orderdetail.wxss */
+.container{
+  background: #efefef;
+}
+.status{
+  height: 70rpx;
+  line-height: 70rpx;
+  color: #282828;
+  padding: 0 30rpx;
+}
+.panel{
+  background: #fff;
+}
+.panel .item{
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #282828;
+  padding-left: 30rpx;
+  border-bottom: 2rpx solid #efefef;
+}
+
+.panel .item text{
+  display: inline-block;
+  width: 200rpx;
+  color: #999;
+}
+
+.pro{
+  display: flex;
+  padding: 24rpx;
+  padding-left: 0;
+  margin-left: 24rpx;
+}
+
+.pro image{
+  width: 120rpx;
+  height: 120rpx;
+  padding-right: 40rpx;
+}
+.pro .pro-r{
+  width: 500rpx;
+}
+.pro-r .name{
+  color: #282828;
+  height: 85rpx;
+  margin-left: 50rpx;
+  white-space: wrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.pro-r .count{
+  margin-top:10rpx;
+  text-align: right;
+  color: #999;
+  line-height: 40rpx;
+}
+.footer .item{
+  height: 70rpx;
+  line-height: 70rpx;
+  padding: 0 30rpx;
+  color: #999;
+}

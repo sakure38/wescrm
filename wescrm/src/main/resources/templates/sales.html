@@ -1,0 +1,86 @@
+
+<@override name="title">SCRM-后台管理</@override>
+
+<@override name="content">
+<div class="panel panel-default ux-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">我的销售数据：次数据为静态数据，开发者可根据业务自行处理</h3>
+    </div>
+
+    <div class="form-group alert alert-warning ux-alert" >
+        <label class="col-sm-2 control-label">成交额：<span>10000000</span></label>
+        <label class="col-sm-2 control-label">会员数量：<span>5000000</span></label>
+        <label class="col-sm-6 control-label">佣金额：<span>9999999</span></label>
+    </div>
+
+    <div class="panel-body">
+        <div id="main" style="width: 100%;height:500px;"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+       	    title: {
+       	        text: '7天内数据'
+       	    },
+       	    tooltip: {
+       	        trigger: 'axis'
+       	    },
+       	    legend: {
+       	        data: ['成交额', '粉丝数量', '会员数量', '佣金额']
+       	    },
+       	    grid: {
+       	        left: '3%',
+       	        right: '4%',
+       	        bottom: '3%',
+       	        containLabel: true
+       	    },
+       	    toolbox: {
+       	        feature: {
+       	            saveAsImage: {}
+       	        }
+       	    },
+       	    xAxis: {
+       	        type: 'category',
+       	        boundaryGap: false,
+       	        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+       	    },
+       	    yAxis: {
+       	        type: 'value'
+       	    },
+       	    series: [
+       	        {
+       	            name: '成交额',
+       	            type: 'line',
+       	            stack: '总量',
+       	            data: [120, 132, 101, 134, 90, 230, 210]
+       	        },
+       	        {
+       	            name: '粉丝数量',
+       	            type: 'line',
+       	            stack: '总量',
+       	            data: [220, 182, 191, 234, 290, 330, 310]
+       	        },
+       	        {
+       	            name: '会员数量',
+       	            type: 'line',
+       	            stack: '总量',
+       	            data: [150, 232, 201, 154, 190, 330, 410]
+       	        },
+       	        {
+       	            name: '佣金额',
+       	            type: 'line',
+       	            stack: '总量',
+       	            data: [320, 332, 301, 334, 390, 330, 320]
+       	        }
+       	    ]
+       	};
+        myChart.setOption(option);
+    </script>
+
+</@override>
+
+<!-- extends要写在最后 -->
+<@extends name="_base.html"/>
+

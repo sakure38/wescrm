@@ -1,0 +1,68 @@
+/* pages/orderdetail/orderdetail.wxss */
+.container{
+  background: #efefef;
+}
+.user-header{
+  width: 100%;
+  padding: 10rpx 0rpx;
+  background-image: linear-gradient(#fff, #fff);
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  border-bottom: 2rpx solid #efefef;
+}
+.user-avatar{
+ width: 120rpx;
+ height: 120rpx;
+ border-radius: 50%;
+ overflow:hidden;
+ object-fit: cover;
+ display: block;
+ margin: 0px 40rpx;
+ border: 2rpx solid #FFF;
+}
+
+.form-panel{
+  background: #fff;
+}
+.form-panel .form-group{
+  display: flex;
+  flex-direction: row;
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #282828;
+  border-bottom: 2rpx solid #efefef;
+}
+
+.form-control{
+  padding-left:10rpx;
+  text-align: left;
+  height: 90rpx;
+  line-height: 90rpx;
+  width: 75%;
+}
+
+.form-group .form-label{
+  display: inline-block;
+  width: 180rpx;
+  color: #999;
+  text-align: right;
+}
+
+.control-label{
+  display: inline-block;
+  width: 250rpx;
+  color: #999;
+  text-align: left;
+  padding-left:10rpx;
+}
+
+.form-btn{
+  position: absolute;
+  width: 20rpx;
+  height: 40rpx;
+  right: 20rpx;
+  margin-top: 25rpx;
+}
+

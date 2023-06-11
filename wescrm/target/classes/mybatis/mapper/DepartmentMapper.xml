@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.we.scrm.dao.DepartmentDao">
+
+	<resultMap id="bean_map" type="com.we.scrm.domain.Department" >
+		<result column="id" property="id"  jdbcType="INTEGER" />
+		<result column="pid" property="pid"  jdbcType="INTEGER" />
+		<result column="parentid" property="parentid"  jdbcType="INTEGER" />
+		<result column="name" property="name"  jdbcType="VARCHAR" />
+		<result column="name_en" property="nameEn"  jdbcType="VARCHAR" />
+		<result column="sort" property="sort"  jdbcType="INTEGER" />
+		<result column="createAt" property="createAt"  jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="all_columns">
+		id, pid, parentid, name, name_en, sort, createAt
+	</sql>
+
+	<select id="queryAll" parameterType="com.we.scrm.domain.Department" resultMap="bean_map">
+		SELECT 
+		<include refid="all_columns"  />
+		FROM department
+		ORDER BY id DESC
+	</select>
+
+	<select id="getTotalItemsCount" parameterType="com.we.scrm.domain.Department" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM department
+	</select>
+
+	<select id="queryPage" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM department
+		ORDER BY id DESC
+		LIMIT #{param2.startIndex} , #{param2.pageSize} 
+	</select>
+
+	<select id="getById" parameterType="java.lang.Long" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM department
+		WHERE id = #{id}
+	</select>
+
+	<insert id="create" parameterType="com.we.scrm.domain.Department" flushCache="true"  useGeneratedKeys="true" keyProperty="id"  >
+		INSERT INTO department
+		( id,pid,parentid,name,name_en,sort,createAt ) 
+		VALUES 
+		( #{id},#{pid},#{parentid},#{name},#{nameEn},#{sort},#{createAt} ) 
+	</insert>
+
+	<update id="update" parameterType="com.we.scrm.domain.Department" flushCache="true">
+		UPDATE department
+		<trim prefix="SET" suffixOverrides="," > 
+			<if test="pid != null ">
+			pid = #{pid, jdbcType=INTEGER},
+			</if>
+			<if test="parentid != null ">
+			parentid = #{parentid, jdbcType=INTEGER},
+			</if>
+			<if test="name != null ">
+			name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="nameEn != null ">
+			name_en = #{nameEn, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null ">
+			sort = #{sort, jdbcType=INTEGER},
+			</if>
+		</trim>
+		WHERE id = #{id} 
+	</update>
+
+	<delete id="delete" parameterType="com.we.scrm.domain.Department" >
+		DELETE FROM department
+		WHERE id = #{id}
+	</delete>
+
+	<insert id="createList" parameterType="list">
+		INSERT INTO department
+		( pid,parentid,name,name_en,sort,createAt )
+		VALUES
+		<foreach  collection="list" item="item" index="index" separator="," >
+			( #{item.pid, jdbcType=INTEGER}, #{item.parentid, jdbcType=INTEGER}, #{item.name, jdbcType=VARCHAR}, #{item.nameEn, jdbcType=VARCHAR},#{item.sort, jdbcType=INTEGER},#{item.createAt, jdbcType=TIMESTAMP})
+		</foreach>
+	</insert>
+
+	<delete id="removeAll" >
+		DELETE FROM department
+	</delete>
+
+</mapper>

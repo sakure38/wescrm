@@ -1,0 +1,144 @@
+
+
+<@override name="content">
+<div class="panel panel-default ux-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">商品管理</h3>
+    </div>
+
+    <div class="panel-body">
+
+        <form id="_queryPageForm">
+
+            <div class="col-sm-3">
+                    <input type="text" name="pid" class="form-control" value="${(queryEntity.pid)!}">
+            </div>
+            <div class="col-sm-3">
+                    <select name="status" class="form-control">
+                        <option value="-1">所有</option>
+                        <option value="1" <#if (queryEntity.status)?? && queryEntity.status == 1>selected</#if>>已上架</option>
+                        <option value="0" <#if (queryEntity.status)?? && queryEntity.status == 0>selected</#if>>未上架</option>
+                </select>
+            </div>
+
+        <button type="button" class="btn btn-primary" onclick="doSearch();" >搜索</button>
+
+        <div class="ux-table-div" style="margin-top:15px;">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th style="width:150px;">pid</th>
+                    <th style="width:100px;">图片</th>
+                    <th style="width:250px;">名称</th>
+                    <th>分类</th>
+                    <th>价格</th>
+                    <th>佣金</th>
+                    <th style="width:130px;">创建时间</th>
+                    <th style="width:200px; text-align: center">
+                        <button type="button" class="btn btn-primary" onClick="window.location.href='${base}/product/merge'">添加商品</button>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <#if (page.items)??>
+                <#list page.items as item>
+                <tr>
+                    <td>${item.pid!}</td>
+                    <td>
+                        <#if (item.picture)??>
+                        <img style="width:48px; height:48px; background-image:url('/file/attachment/${item.picture}/s'); background-size:48px 48px;">
+                        </#if>
+                    </td>
+                    <td><div class="elips" style="width:250px;" title="${item.name!}">${item.name!}</div></td>
+                    <td>${item.categoryName!}</td>
+                    <td>${item.price!}</td>
+                    <td>${item.rebate!}</td>
+                    <td>
+                        <#if (item.createAt)??>
+                        ${item.createAt?string('yyyy-MM-dd HH:mm')}
+                        </#if>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="${base}/product/merge?id=${item.id}" ><span>修改</span></a>
+                        <a href="javascript:void(0)" onclick="doSale(${item.id});" >
+                            <#if item.status == 0>
+                            <span>上架</span>
+                            <#else>
+                            <span style="color:red;">下架</span>
+                        </#if>
+                        </a>
+                        <a href="javascript:void(0)" onclick="doDelete(${item.id})" style="margin-left:3px;"><span>删除</span></a>
+                    </td>
+                </tr>
+                </#list>
+            </#if>
+            </tbody>
+            </table>
+        </div>
+
+        <#if (page.pageTotalCount)?? && page.pageTotalCount gt 1>
+        <ul class="pagination">
+            <input type="hidden" id="_id_pageNum" name="pageNum" value="${page.pageNum}"/>
+            <#list page.showNums as n>
+            <#if page.showDot && n_index == 6>
+            <li class="disabled"><a href="javascript:void(0)">...</a></li>
+        </#if>
+        <#if page.pageNum == n>
+        <li class="active"><a href="javascript:void(0);">${n}</a></li>
+        <#else>
+        <li><a href="javascript:void(0);" onclick="_queryPage('${n}');">${n}</a></li>
+        </#if>
+        </#list>
+        </ul>
+        </#if>
+
+        </form>
+
+    </div><!-- panel-body end -->
+</div><!-- panel end -->
+
+<script type="text/javascript">
+	function doSale(id){
+		$.ajax({
+			url:'${base}/product/doSale',
+		    type:'POST',
+		    dataType:'json',
+		    data:{"id":id},
+		    success:function(resp){
+		    	var errcode = resp.errcode;
+		    	if(errcode == 0){
+		    		_queryPage();
+		    	}else{
+		    		alert("操作失败");
+		    	}
+		    }
+		});
+	}
+
+	function doDelete(id){
+		Modal.confirm('确定删除?',function(type){
+			$.ajax({
+				url:'${base}/product/delete',
+			    type:'POST',
+			    dataType:'json',
+			    data:{"id":id},
+			    success:function(resp){
+			    	var errcode = resp.errcode;
+			    	if(errcode == 0){
+			    		_queryPage();
+			    	}else{
+			    		Modal.alert("删除失败");
+			    	}
+			    }
+			});
+		});
+	}
+</script>
+
+</@override>
+
+<!-- extends 一定要写在页面最下方 -->
+<@extends name="_base.html"/>
+
+

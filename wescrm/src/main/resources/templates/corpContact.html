@@ -1,0 +1,65 @@
+
+<@override name="content">
+<div class="panel panel-default ux-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">我的企业客户</h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="ux-table-div" >
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th>头像</th>
+                    <th>姓名</th>
+                    <th>userid</th>
+                    <th>unionid</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <#if (contactList)??>
+                <#list contactList as item>
+                <tr>
+                    <td><img src="${(item.avatar)!}" style="width:48px; height:48px;" /></td>
+                    <td>${(item.name)!}</td>
+                    <td>${(item.external_userid)!}</td>
+                    <td>${(item.unionid)!}</td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="syncContact('${(item.external_userid)!}')">同步到本地</a>
+                    </td>
+                </tr>
+                </#list>
+            </#if>
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function syncContact(userid){
+        $.ajax({
+            url:'${base}/corpContact/sync',
+            type:'POST',
+            dataType:'JSON',
+            data:{'userid':userid},
+            success: function(resp){
+                var errcode = resp.errcode;
+		    	if(errcode == 0){
+		    		Modal.alert("同步成功");
+		    	}else{
+		    		Modal.alert(resp.message);
+		    	}
+            }
+        });
+    }
+
+</script>
+
+</@override>
+
+<!-- extends 一定要写在页面最下方 -->
+<@extends name="_base.html"/>

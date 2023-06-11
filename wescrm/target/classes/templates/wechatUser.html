@@ -1,0 +1,105 @@
+
+<@override name="content">
+<div class="panel panel-default ux-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">微信公众号用户管理</h3>
+    </div>
+    
+    <div class="panel-body">
+    	<form id="_queryPageForm">
+    		
+    		<div class="ux-table-div" style="margin-top:15px;">
+		        <table class="table table-condensed">
+				  <thead>
+				    <tr>
+				      <th>头像</th>
+				      <th>openid</th>
+				      <th>微信昵称</th>
+				      <th>城市</th>
+				      <th>省份</th>
+				      <th>国家</th>
+				      <th>unionid</th>
+				      <th>操作</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	<#if (userList)??>
+						<#list userList as item>
+						<tr>
+							<td>
+							<image src="${item.headimgurl!}" style="width:48px;height:48px;"/>
+							</td>
+							<td>${item.openid!}</td>
+							<td>${item.nickname!}</td>
+							<td>${item.city!}</td>
+							<td>${item.province!}</td>
+							<td>${item.country!}</td>
+							<td>${item.unionid!}</td>
+							<td>
+								<a href="javascript:void(0)" onclick="doAssign('${item.openid}')">分配</a>
+							</td>
+						</tr>
+						</#list>
+					</#if>
+				  </tbody>
+				</table>
+			</div>
+		</form>
+    </div>
+    
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" style="margin-top:5%;" data-backdrop="static" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                <h4 class="modal-title">分配公众号用户给系统人员</h4>
+	            </div>
+	            <input type="hidden" id="openid" value=""/>
+	            <div class="modal-body" id="assignUserDiv">
+	            </div>
+	            
+	            <div id="_osAlertTip"></div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	                <button type="button" class="btn btn-primary" onclick="doSubmit()">保存</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	</div>
+    
+</div>
+
+<script type="text/javascript">
+	function doAssign(openid){
+		$('#openid').val(openid);
+		$('#myModal').modal();
+		var url = "${base}/wechat/userAssign";
+		$("#assignUserDiv").load(url, function(){});
+	}
+	function doSubmit(){
+		var openid = $('#openid').val();
+		var userid = $("input[name='userid']:checked").val();
+		if(openid && userid){
+			$.ajax({
+				url:'${base}/wechat/assignToCustomer',
+			    type:'POST',
+			    dataType:'json',
+			    data:{"openid":openid,userid:userid},
+			    success:function(resp){
+			    	var errcode = resp.errcode;
+			    	if(errcode == 0){
+			    		Modal.tipSuccess("分配成功");//失败提示
+			    	}else{
+			    		Modal.tipFailure(resp.message);
+			    	}
+			    } 
+			});
+		}else{
+			Modal.tipFailure("请选择系统人员");
+		}
+	}
+
+</script>
+</@override>
+
+<@extends name="_base.html" />

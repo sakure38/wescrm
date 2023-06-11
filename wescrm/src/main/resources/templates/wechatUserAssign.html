@@ -1,0 +1,27 @@
+<div class="ux-table-div" style="min-height:300px;">
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th>选择人员</th>
+				<th>登录名</th>
+				<th>姓名</th>
+				<th>手机号</th>
+			</tr>
+		</thead>
+		<tbody>
+			<#if (userList)??>
+			<#list userList as item>
+			<tr>
+				<td style="padding-left:10px;">
+				<input type="radio" name="userid" value="${item.id}"/>
+				</td>
+				<td>${item.username!}</td>
+				<td>${item.name!}</td>
+				<td>${item.mobile!}</td>
+			</tr>
+			</#list>
+			</#if>
+	  </tbody>
+	</table>
+</div>
+

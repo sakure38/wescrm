@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.we.scrm.dao.WerunUserDao">
+
+	<resultMap id="bean_map" type="com.we.scrm.domain.WerunUser" >
+		<result column="id" property="id"  jdbcType="INTEGER" />
+		<result column="openid" property="openid"  jdbcType="VARCHAR" />
+		<result column="steps" property="steps"  jdbcType="INTEGER" />
+		<result column="createAt" property="createAt"  jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="all_columns">
+		id, openid, steps, createAt
+	</sql>
+
+	<select id="queryAll" parameterType="com.we.scrm.domain.WerunUser" resultMap="bean_map">
+		SELECT 
+		<include refid="all_columns"  />
+		FROM werun_user
+		ORDER BY id DESC
+	</select>
+
+	<select id="getTotalItemsCount" parameterType="com.we.scrm.domain.WerunUser" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM werun_user
+	</select>
+
+	<select id="queryPage" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM werun_user
+		ORDER BY id DESC
+		LIMIT #{param2.startIndex} , #{param2.pageSize} 
+	</select>
+
+	<select id="getById" parameterType="java.lang.Long" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM werun_user
+		WHERE id = #{id}
+	</select>
+
+	<select id="getByOpenid" parameterType="java.lang.String" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM werun_user
+		WHERE openid = #{openid}
+	</select>
+
+	<insert id="create" parameterType="com.we.scrm.domain.WerunUser" flushCache="true"  useGeneratedKeys="true" keyProperty="id"  >
+		INSERT INTO werun_user
+		( id,openid,steps,createAt ) 
+		VALUES 
+		( #{id},#{openid},#{steps},#{createAt} ) 
+	</insert>
+
+	<update id="update" parameterType="com.we.scrm.domain.WerunUser" flushCache="true">
+		UPDATE werun_user
+		<trim prefix="SET" suffixOverrides="," > 
+			<if test="openid != null ">
+			openid = #{openid, jdbcType=VARCHAR},
+			</if>
+			<if test="steps != null ">
+			steps = #{steps, jdbcType=INTEGER},
+			</if>
+		</trim>
+		WHERE id = #{id} 
+	</update>
+
+	<delete id="delete" parameterType="com.we.scrm.domain.WerunUser" >
+		DELETE FROM werun_user
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

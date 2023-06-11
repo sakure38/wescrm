@@ -1,0 +1,34 @@
+<!--index.wxml-->
+<view class="container">
+
+  <!-- swiper -->
+  <swiper class="banner" indicator-dots="true" autoplay="true" circular="true" 
+    indicator-color="#8a8a8a" indicator-active-color="#337ab7">
+    <block wx:for="{{recommendList}}" wx:key="key">
+      <swiper-item>
+        <navigator url="/pages/product/product?id={{item.id}}">
+          <image src="{{contextUrl}}/file/attachment/{{item.picture}}/l" class="full-image" mode="scaleToFill"></image>
+        </navigator>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <image src="../../images/fruit.png" class="full-image" mode="widthFix" style="margin-top:30rpx;"></image>
+
+  <view class="product-list">
+
+    <block wx:for="{{products}}" wx:key="key">
+      <navigator class="product-item" url="/pages/product/product?id={{item.id}}">
+        <image src="{{contextUrl}}/file/attachment/{{item.picture}}/l"></image>
+        <view class="product-info">
+          <view class="name">{{item.name}}</view>
+          <view class="price">￥{{item.price}}元</view>
+        </view>
+      </navigator>
+  </block>
+
+  </view>
+
+
+</view>
+

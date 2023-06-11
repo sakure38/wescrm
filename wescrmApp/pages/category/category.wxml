@@ -1,0 +1,30 @@
+
+<view class="container">
+  <view class="category-nav" style="background:#EEE">
+    <view class="nav-item {{(0 == curCategory)? 'active' : ''}}" id="0" bindtap="changeCategory">
+      全部分类
+    </view>
+    
+    <block wx:for="{{categoryList}}" wx-key="key">
+      <view class="nav-item {{(item.code == curCategory)? 'active' : ''}}" 
+      id="{{item.code}}" bindtap="changeCategory">
+        {{item.name}}
+      </view>
+    </block>
+
+  </view>
+
+  <scroll-view class="product-content" bindscrolltolower="fecthMore" scroll-y>
+    
+    <block wx:for="{{products}}" wx:key="key">
+      <navigator class="product-item" url="/pages/product/product?id={{item.id}}">
+        <image src="{{contextUrl}}/file/attachment/{{item.picture}}/l" class="bg" mode="scaleToFill"></image>
+        <view class="name">{{item.name}}</view>
+        <view class="price">￥{{item.price}}元</view>
+      </navigator>
+    </block>
+    
+  </scroll-view>
+
+</view>
+

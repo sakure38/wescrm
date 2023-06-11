@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.we.scrm.dao.CustomerTagsDao">
+
+	<resultMap id="bean_map" type="com.we.scrm.domain.CustomerTags" >
+		<result column="id" property="id"  jdbcType="INTEGER" />
+		<result column="customer_id" property="customerId"  jdbcType="INTEGER" />
+		<result column="tag_id" property="tagId"  jdbcType="INTEGER" />
+		<result column="createAt" property="createAt"  jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="all_columns">
+		id, customer_id, tag_id, createAt
+	</sql>
+
+	<select id="queryAll" parameterType="com.we.scrm.domain.CustomerTags" resultMap="bean_map">
+		SELECT 
+		<include refid="all_columns"  />
+		FROM customer_tags
+		ORDER BY id DESC
+	</select>
+
+	<select id="getCustomerTags" parameterType="com.we.scrm.domain.CustomerTags" resultType="com.we.scrm.domain.CustomerTags">
+		select c.id, c.tag_id AS tagId, t.content AS tagContent, t.type AS tagType
+		FROM customer_tags c , tags t
+		WHERE c.tag_id = t.id
+		AND c.customer_id = #{customerId, jdbcType = INTEGER}
+		ORDER BY c.id
+	</select>
+
+	<select id="getTotalItemsCount" parameterType="com.we.scrm.domain.CustomerTags" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM customer_tags
+	</select>
+
+	<select id="queryPage" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM customer_tags
+		ORDER BY id DESC
+		LIMIT #{param2.startIndex} , #{param2.pageSize} 
+	</select>
+
+	<select id="getById" parameterType="java.lang.Long" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM customer_tags
+		WHERE id = #{id}
+	</select>
+
+	<insert id="create" parameterType="com.we.scrm.domain.CustomerTags" flushCache="true"  useGeneratedKeys="true" keyProperty="id"  >
+		INSERT INTO customer_tags
+		( id,customer_id,tag_id,createAt ) 
+		VALUES 
+		( #{id},#{customerId},#{tagId},#{createAt} ) 
+	</insert>
+
+	<insert id="batchCreate" parameterType="list">
+		INSERT INTO customer_tags
+		( customer_id,tag_id,createAt )
+		VALUES
+		<foreach  collection="list" item="item" index="index" separator="," >
+			( #{item.customerId, jdbcType=INTEGER}, #{item.tagId, jdbcType=INTEGER}, #{item.createAt, jdbcType=TIMESTAMP})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.we.scrm.domain.CustomerTags" flushCache="true">
+		UPDATE customer_tags
+		<trim prefix="SET" suffixOverrides="," > 
+			<if test="customerId != null ">
+			customer_id = #{customerId, jdbcType=INTEGER},
+			</if>
+			<if test="tagId != null ">
+			tag_id = #{tagId, jdbcType=INTEGER},
+			</if>
+		</trim>
+		WHERE id = #{id} 
+	</update>
+
+	<delete id="delete" parameterType="com.we.scrm.domain.CustomerTags" >
+		DELETE FROM customer_tags
+		WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteByCustomer" parameterType="java.lang.Long" >
+		DELETE FROM customer_tags
+		WHERE customer_id = #{customerId, jdbcType=INTEGER}
+	</delete>
+
+</mapper>

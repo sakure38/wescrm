@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.we.scrm.dao.CustomerDao">
+
+	<resultMap id="bean_map" type="com.we.scrm.domain.Customer" >
+		<result column="id" property="id"  jdbcType="INTEGER" />
+		<result column="user_id" property="userId"  jdbcType="INTEGER" />
+		<result column="nickname" property="nickname"  jdbcType="VARCHAR" />
+		<result column="name" property="name"  jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile"  jdbcType="VARCHAR" />
+		<result column="wxid" property="wxid"  jdbcType="VARCHAR" />
+		<result column="openid" property="openid"  jdbcType="VARCHAR" />
+		<result column="copenid" property="copenid"  jdbcType="VARCHAR" />
+		<result column="mopenid" property="mopenid"  jdbcType="VARCHAR" />
+		<result column="unionid" property="unionid"  jdbcType="VARCHAR" />
+		<result column="email" property="email"  jdbcType="VARCHAR" />
+		<result column="address" property="address"  jdbcType="VARCHAR" />
+		<result column="gender" property="gender"  jdbcType="INTEGER" />
+		<result column="birthday" property="birthday"  jdbcType="TIMESTAMP" />
+		<result column="card" property="card"  jdbcType="VARCHAR" />
+		<result column="card_no" property="cardNo"  jdbcType="VARCHAR" />
+		<result column="bank" property="bank"  jdbcType="VARCHAR" />
+		<result column="bank_no" property="bankNo"  jdbcType="VARCHAR" />
+		<result column="bank_site" property="bankSite"  jdbcType="VARCHAR" />
+		<result column="money" property="money"  jdbcType="DECIMAL" />
+		<result column="point" property="point"  jdbcType="INTEGER" />
+		<result column="level" property="level"  jdbcType="TINYINT" />
+		<result column="rebate_type" property="rebateType"  jdbcType="TINYINT" />
+		<result column="rebate_money" property="rebateMoney"  jdbcType="DECIMAL" />
+		<result column="parent_id" property="parentId"  jdbcType="INTEGER" />
+		<result column="parent_name" property="parentName"  jdbcType="VARCHAR" />
+		<result column="order_money" property="orderMoney"  jdbcType="DECIMAL" />
+		<result column="order_time" property="orderTime"  jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark"  jdbcType="VARCHAR" />
+		<result column="user_count" property="userCount"  jdbcType="INTEGER" />
+		<result column="createAt" property="createAt"  jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="all_columns">
+		id, user_id, nickname, name, mobile, wxid, openid, copenid, mopenid, unionid, email, address, gender, birthday, card, card_no, bank, bank_no, bank_site, money, point, level, rebate_type, rebate_money, parent_id, parent_name, order_money, order_time, remark, user_count, createAt
+	</sql>
+
+	<select id="queryAll" parameterType="com.we.scrm.domain.Customer" resultMap="bean_map">
+		SELECT 
+		<include refid="all_columns"  />
+		FROM customer
+		ORDER BY id DESC
+	</select>
+	
+	<select id="queryRankSalers" parameterType="java.lang.String" resultMap="bean_map">
+		SELECT 
+		<include refid="all_columns"  />
+		FROM customer
+		ORDER BY ${orderField} ASC
+		LIMIT 0, 8
+	</select>
+
+	<select id="getTotalItemsCount" parameterType="com.we.scrm.domain.Customer" resultType="java.lang.Integer">
+		SELECT COUNT(id)
+		FROM customer
+		<where>
+			<if test="level != null">
+				AND level = #{level, jdbcType = INTEGER}
+			</if>
+			<if test="rebateType != null">
+				AND rebate_type = #{rebateType, jdbcType = INTEGER}
+			</if>
+			<if test="userId != null">
+				AND user_id = #{userId, jdbcType = INTEGER}
+			</if>
+			<if test="@org.apache.commons.lang.StringUtils@isNotBlank(wxid)">
+				AND wxid = #{wxid, jdbcType = VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="queryPage" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM customer
+		<where>
+			<if test="param1.level != null">
+				AND level = #{param1.level, jdbcType = INTEGER}
+			</if>
+			<if test="param1.rebateType != null">
+				AND rebate_type = #{param1.rebateType, jdbcType = INTEGER}
+			</if>
+			<if test="param1.userId != null">
+				AND user_id = #{param1.userId, jdbcType = INTEGER}
+			</if>
+			<if test="@org.apache.commons.lang.StringUtils@isNotBlank(param1.wxid)">
+				AND wxid = #{param1.wxid, jdbcType = VARCHAR}
+			</if>
+		</where>
+		ORDER BY id DESC
+		LIMIT #{param2.startIndex} , #{param2.pageSize} 
+	</select>
+
+	<select id="getById" parameterType="java.lang.Long" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM customer
+		WHERE id = #{id}
+	</select>
+
+	<select id="getByCopenid" parameterType="java.lang.String" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM customer
+		WHERE openid = #{copenid}
+	</select>
+
+	<select id="getByOpenid" parameterType="java.lang.String" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM customer
+		WHERE openid = #{openid}
+	</select>
+
+	<select id="getByMOpenid" parameterType="java.lang.String" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM customer
+		WHERE mopenid = #{mopenid}
+	</select>
+
+
+	<insert id="create" parameterType="com.we.scrm.domain.Customer" flushCache="true"  useGeneratedKeys="true" keyProperty="id"  >
+		INSERT INTO customer
+		( id,user_id,nickname,name,mobile,wxid,openid,copenid,mopenid,unionid,email,address,gender,birthday,card,card_no,bank,bank_no,bank_site,money,point,level,rebate_type,rebate_money,parent_id,parent_name,order_money,order_time,remark,user_count,createAt ) 
+		VALUES 
+		( #{id},#{userId},#{nickname},#{name},#{mobile},#{wxid},#{openid},#{copenid},#{mopenid},#{unionid},#{email},#{address},#{gender},#{birthday},#{card},#{cardNo},#{bank},#{bankNo},#{bankSite},#{money},#{point},#{level},#{rebateType},#{rebateMoney},#{parentId},#{parentName},#{orderMoney},#{orderTime},#{remark},#{userCount},#{createAt} ) 
+	</insert>
+
+	<update id="update" parameterType="com.we.scrm.domain.Customer" flushCache="true">
+		UPDATE customer
+		<trim prefix="SET" suffixOverrides="," > 
+			<if test="userId != null ">
+			user_id = #{userId, jdbcType=INTEGER},
+			</if>
+			<if test="nickname != null ">
+			nickname = #{nickname, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null ">
+			name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null ">
+			mobile = #{mobile, jdbcType=VARCHAR},
+			</if>
+			<if test="wxid != null ">
+			wxid = #{wxid, jdbcType=VARCHAR},
+			</if>
+			<if test="openid != null ">
+			openid = #{openid, jdbcType=VARCHAR},
+			</if>
+			<if test="copenid != null ">
+			copenid = #{copenid, jdbcType=VARCHAR},
+			</if>
+			<if test="mopenid != null ">
+			mopenid = #{mopenid, jdbcType=VARCHAR},
+			</if>
+			<if test="unionid != null ">
+			unionid = #{unionid, jdbcType=VARCHAR},
+			</if>
+			<if test="email != null ">
+			email = #{email, jdbcType=VARCHAR},
+			</if>
+			<if test="address != null ">
+			address = #{address, jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null ">
+			gender = #{gender, jdbcType=INTEGER},
+			</if>
+			<if test="birthday != null ">
+			birthday = #{birthday, jdbcType=TIMESTAMP},
+			</if>
+			<if test="card != null ">
+			card = #{card, jdbcType=VARCHAR},
+			</if>
+			<if test="cardNo != null ">
+			card_no = #{cardNo, jdbcType=VARCHAR},
+			</if>
+			<if test="bank != null ">
+			bank = #{bank, jdbcType=VARCHAR},
+			</if>
+			<if test="bankNo != null ">
+			bank_no = #{bankNo, jdbcType=VARCHAR},
+			</if>
+			<if test="bankSite != null ">
+			bank_site = #{bankSite, jdbcType=VARCHAR},
+			</if>
+			<if test="money != null ">
+			money = #{money, jdbcType=DECIMAL},
+			</if>
+			<if test="point != null ">
+			point = #{point, jdbcType=INTEGER},
+			</if>
+			<if test="level != null ">
+			level = #{level, jdbcType=TINYINT},
+			</if>
+			<if test="rebateType != null ">
+			rebate_type = #{rebateType, jdbcType=TINYINT},
+			</if>
+			<if test="rebateMoney != null ">
+			rebate_money = #{rebateMoney, jdbcType=DECIMAL},
+			</if>
+			<if test="parentId != null ">
+			parent_id = #{parentId, jdbcType=INTEGER},
+			</if>
+			<if test="parentName != null ">
+			parent_name = #{parentName, jdbcType=VARCHAR},
+			</if>
+			<if test="orderMoney != null ">
+			order_money = #{orderMoney, jdbcType=DECIMAL},
+			</if>
+			<if test="orderTime != null ">
+			order_time = #{orderTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null ">
+			remark = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="userCount != null ">
+			user_count = #{userCount, jdbcType=INTEGER},
+			</if>
+		</trim>
+		WHERE id = #{id} 
+	</update>
+
+	<delete id="delete" parameterType="com.we.scrm.domain.Customer" >
+		DELETE FROM customer
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

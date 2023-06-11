@@ -1,0 +1,51 @@
+<!--pages/orderdetail/orderdetail.wxml-->
+<view class="container">
+  <view class="status">{{order.statusName}}</view>
+
+  <view class="panel">
+    <view class="item">
+      <text>订单号：</text>{{order.orderId}}
+    </view>
+
+    <view class="item">
+      <text>收件人：</text>{{customer.name}}
+    </view>
+
+    <view class="item">
+      <text>收件人电话：</text>{{customer.mobile}}
+    </view>
+
+    <view class="item" style="height:auto;line-height:normal;padding:30rpx;">
+      <text>收货地址：</text>
+      <view style="margin-top:20rpx;">{{order.address}}</view>
+    </view>
+
+    <view class="item">
+      <text>快递单号：</text>{{order.shippingSn}}
+    </view>
+
+    <view class="pro" >
+      <image wx:if="{{order.productPicture}}" src="{{contextUrl}}/file/attachment/{{order.productPicture}}/l" mode="aspectFill"/>
+      <view class="pro-r">
+        <view class="name">{{order.productName}}</view>
+        <view class="count" style="margin-top:20rpx;">
+          <text>单价：<text style="color:#bf0008;">￥{{order.productPrice}}</text></text>
+          <text style="margin-left:20rpx;">，共 {{order.productCount}} 件</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="item" style="border-top: 2rpx solid #efefef;">
+      <text>实付款：</text>
+      <text style="color:#bf0008;">￥{{order.money}}</text>
+    </view>
+    
+  </view>
+
+  <view class="footer">
+    <view class="item">
+      <text>下单时间：</text>{{order.createAt}}
+    </view>  
+  </view>
+  
+</view>

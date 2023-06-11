@@ -1,0 +1,33 @@
+
+<div class="ux-table-div" style="min-height:300px">
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>选择</th>
+                <th>用户id</th>
+                <th>姓名</th>
+                <th style="text-align:center">openid</th>
+                <th>操作
+                <a href="javascript:void(0)" onclick="toSendMsg();">发送消息</a>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <#if (userList)??>
+            <#list userList as item>
+            <tr>
+                <td><input type="checkbox" name="userid" value="${(item.userid)!}" /></td>
+                <td>${(item.userid)!}</td>
+                <td>${(item.name)!}</td>
+                <td>${(item.open_userid)!}</td>
+                <td>
+                    <a href="javascript:void(0)" onclick="syncCorpUser('${(item.userid)!}')">同步到本地</a>
+
+                </td>
+            </tr>
+           </#list>
+           </#if>
+        </tbody>
+    </table>
+</div>

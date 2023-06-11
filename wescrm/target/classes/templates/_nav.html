@@ -1,0 +1,84 @@
+<div class="ux-nav-container">
+    <div class="logo"></div>
+    <div class="ux-nav-title" data-toggle="collapse" data-target="#collapse-1">
+        <span class="glyphicon glyphicon-stats"></span>
+        <span >数据概览</span>
+    </div>
+
+    <div id="collapse-1" class="ux-nav-list collapse in">
+        <div>
+            <a href="${base}/"><span <#if active?? && active == "index"> class="active" </#if>>数据榜单</span></a>
+            <a href="${base}/sales"><span <#if active?? && active == "sales"> class="active" </#if>>我的数据</span></a>
+        </div>
+    </div>
+
+    <div class="ux-nav-title" data-toggle="collapse" data-target="#collapse-3" >
+        <span class="glyphicon glyphicon-th-large"></span>
+        <span>企微管理</span>
+    </div>
+    <div id="collapse-3" class="ux-nav-list collapse in">
+        <div>
+            <a href="${base}/corp/department"><span <#if active?? && active == "corpDept"> class="active" </#if>>组织架构</span></a>
+            <a href="${base}/corpContact"><span <#if active?? && active == "corpContact" > class="active" </#if>>企微客户</span></a>
+        </div>
+    </div>
+
+    <div class="ux-nav-title" data-toggle="collapse" data-target="#collapse-2" >
+        <span class="glyphicon glyphicon-file"></span>
+        <span>公众号管理</span>
+    </div>
+    <div id="collapse-2" class="ux-nav-list collapse in">
+        <div>
+            <a href="${base}/wechat/user"><span <#if active?? && active == "wechatUser"> class="active" </#if>>粉丝管理</span></a>
+        </div>
+    </div>
+
+    <div class="ux-nav-title" data-toggle="collapse" data-target="#collapse-5" >
+        <span class="glyphicon glyphicon-align-justify"></span>
+        <span>SCRM管理</span>
+    </div>
+    <div id="collapse-5" class="ux-nav-list collapse in">
+        <div>
+            <a href="${base}/tags/page"><span <#if active?? && active == "tags"> class="active" </#if> >标签管理</span></a>
+            <a href="${base}/customer/page"><span <#if active?? && active == "customer"> class="active" </#if>>客户管理</span></a>
+        </div>
+        <div>
+            <a href="${base}/product/page"><span <#if active?? && active == "product"> class="active" </#if>>商品管理</span></a>
+            <a href="${base}/orders/page"><span <#if active?? && active == "order"> class="active" </#if>>订单管理</span></a>
+        </div>
+        <div>
+            <a href="${base}/authUser/page"><span <#if active?? && active == "authUser"> class="active" </#if>>用户管理</span></a>
+        </div>
+    </div>
+
+    <div class="ux-nav-title" data-toggle="collapse" data-target="#collapse-6" >
+        <span class="glyphicon glyphicon-tags"></span>
+        <span>微信运动营销工具</span>
+    </div>
+    <div id="collapse-6" class="ux-nav-list collapse in">
+        <div>
+            <a href="${base}/werun/user"><span <#if active?? && active == "werun"> class="active" </#if>>步数榜单</span></a>
+        </div>
+    </div>
+
+    <div class="ux-nav-title" data-toggle="collapse" data-target="#collapse-7" >
+        <span class="glyphicon glyphicon-wrench"></span>
+        <span>系统配置</span>
+    </div>
+    <div id="collapse-7" class="ux-nav-list collapse in">
+        <div>
+            <a href="${base}/wechat/config"><span <#if active?? && active == "wechatConfig"> class="active" </#if>>微信配置</span></a>
+        </div>
+    </div>
+
+    <div class="ux-nav-title" data-toggle="collapse" data-target="#collapse-8" >
+        <span class="glyphicon glyphicon-user"></span>
+        <span>当前用户</span>
+    </div>
+    <div id="collapse-8" class="ux-nav-list collapse in">
+        <div>
+            <a href="${base}/logout"><span>退出</span></a>
+        </div>
+    </div>
+
+</div>

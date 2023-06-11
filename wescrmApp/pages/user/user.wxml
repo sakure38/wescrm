@@ -1,0 +1,94 @@
+<view class="container">
+
+  <view class="user-header">
+    <open-data class="user-avatar" type="userAvatarUrl"></open-data>
+    <view class="user-info">
+      <open-data class="user-nickname" type="userNickName"></open-data>
+      <view style="margin-top:15rpx;">
+        <text class="user-type">{{userInfo.levelName}}</text>
+        <text class="user-type" style="margin-left:30rpx;">上级：{{userInfo.parentName}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view style="padding:0rpx 20rpx;">
+    <view class="ux-panel">
+      <view class="panel-content">
+        <view style="border-right:1px solid #efefef;" bindtap="tocash">
+          <text>{{userInfo.money}}</text>
+          <text class="title">账号余额</text>
+        </view>
+
+        <view style="border-right:1px solid #efefef;" bindtap="tocash">
+          <text>{{userInfo.rebateMoney}}</text>
+          <text class="title">佣金</text>
+        </view>
+
+        <view style="border-right:1px solid #efefef;">
+          <text>{{userInfo.point}}</text>
+          <text class="title">积分</text>
+        </view>
+
+        <view style="width:24%;">
+          <text>{{userInfo.level}}级</text>
+          <text class="title">会员等级</text>
+        </view>
+      
+      </view>
+    </view>
+  </view>
+
+  <view style="padding:0rpx 20rpx;">
+    <view class="ux-panel">
+      <view class="panel-title">
+        <text>我的订单</text>
+        <navigator url="/pages/orders/orders" class="all-orders"><text>全部订单</text></navigator>
+      </view>
+      
+      <view class="panel-content" style="clear:both;margin-top:-20rpx;">
+        <view class="order-item" bindtap="toOrders" data-id="1">
+          <image src="../../images/icon/orderUnpay.png"></image>
+          <text class="title">待付款</text>
+        </view>
+        <view class="order-item" bindtap="toOrders" data-id="3">
+          <image src="../../images/icon/orderSend.png"></image>
+          <text class="title">待发货</text>
+        </view>
+        <view class="order-item" bindtap="toOrders" data-id="4">
+          <image src="../../images/icon/orderTraval.png"></image>
+          <text class="title">待收货</text>
+        </view>
+        <view class="order-item" bindtap="toOrders" data-id="5">
+          <image src="../../images/icon/orderStar.png"></image>
+          <text class="title">待评价</text>
+        </view>
+      </view>
+    
+    </view>
+  </view>
+
+  <view style="padding:0rpx 20rpx;">
+      <view class="ux-panel" >
+        <view class="panel-title">我的服务</view>
+        
+        <view class="panel-content" style="margin-top:-20rpx;clear:both;">
+          <view class="order-item">
+            <image src="../../images/icon/sService.png"></image>
+            <text class="title">客服中心</text>
+          </view>
+          
+          <view class="order-item" bindtap="tosetting">
+            <image src="../../images/icon/sSetting.png"></image>
+            <text class="title">设置</text>
+          </view>
+
+          <view class="order-item" bindtap="towerun">
+            <image src="../../images/icon/sSport.png"></image>
+            <text class="title">运动</text>
+          </view>
+
+        </view>
+      </view>
+    </view>
+
+</view>

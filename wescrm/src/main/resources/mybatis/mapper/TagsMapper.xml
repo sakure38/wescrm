@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.we.scrm.dao.TagsDao">
+
+	<resultMap id="bean_map" type="com.we.scrm.domain.Tags" >
+		<result column="id" property="id"  jdbcType="INTEGER" />
+		<result column="content" property="content"  jdbcType="VARCHAR" />
+		<result column="type" property="type"  jdbcType="VARCHAR" />
+		<result column="username" property="username"  jdbcType="VARCHAR" />
+		<result column="createAt" property="createAt"  jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="all_columns">
+		id, content, type, username, createAt
+	</sql>
+
+	<select id="queryAll" parameterType="com.we.scrm.domain.Tags" resultMap="bean_map">
+		SELECT 
+		<include refid="all_columns"  />
+		FROM tags
+		ORDER BY id DESC
+	</select>
+
+	<select id="getTotalItemsCount" parameterType="com.we.scrm.domain.Tags" resultType="java.lang.Integer">
+		SELECT COUNT(id)
+		FROM tags
+		<where>
+			<if test="content != null">
+				AND content like CONCAT('%', #{content, jdbcType=VARCHAR},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="queryPage" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM tags
+		<where>
+			<if test="param1.content != null">
+				AND content like CONCAT('%', #{param1.content, jdbcType=VARCHAR}, '%')
+			</if>
+		</where>
+		ORDER BY id DESC
+		LIMIT #{param2.startIndex} , #{param2.pageSize} 
+	</select>
+
+	<select id="getById" parameterType="java.lang.Long" resultMap="bean_map">
+		SELECT
+		<include refid="all_columns"  />
+		FROM tags
+		WHERE id = #{id}
+	</select>
+
+	<insert id="create" parameterType="com.we.scrm.domain.Tags" flushCache="true"  useGeneratedKeys="true" keyProperty="id"  >
+		INSERT INTO tags
+		( id,content,type,username,createAt ) 
+		VALUES 
+		( #{id},#{content},#{type},#{username},#{createAt} ) 
+	</insert>
+
+	<update id="update" parameterType="com.we.scrm.domain.Tags" flushCache="true">
+		UPDATE tags
+		<trim prefix="SET" suffixOverrides="," > 
+			<if test="content != null ">
+			content = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null ">
+			type = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="username != null ">
+			username = #{username, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		WHERE id = #{id} 
+	</update>
+
+	<delete id="delete" parameterType="com.we.scrm.domain.Tags" >
+		DELETE FROM tags
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

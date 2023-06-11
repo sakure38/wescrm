@@ -1,0 +1,262 @@
+
+<@override name="content">
+<div class="panel panel-default ux-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">企业微信部门管理</h3>
+        <input type="hidden" id="selectedId">
+        <input type="hidden" id="selectedName">
+    </div>
+
+    <div class="panel-body">
+        <div class="col-md-3" style="border-right:1px solid #ccc; min-height:500px;">
+            <div style="margin-top:-10px;">
+                <input type="button" value="添加部门" onclick="addDept()"/>
+                <input type="button" value="修改部门" onclick="editDept()" />
+                <input type="button" value="同步部门"  onclick="syncDept()" />
+            </div>
+
+            <div id="departmentTree" class="tree" style="margin-left:-25px;margin-top:10px;">
+                <#macro treeView treeData>
+                    <#if treeData?? && treeData?size gt 0>
+                        <#list treeData as child>
+                           <li><a href="javascript:void(0)" onclick="loadUser(${child.id},'${child.name}')">${child.name}</a>
+                               <ul>
+                                   <#if child.children?? && child.children?size gt 0>
+                                   <@treeView treeData = child.children />
+                                    </#if>
+                               </ul>
+                           </li>
+                        </#list>
+                    </#if>
+                </#macro>
+                <@treeView treeData = departmentTree />
+            </div>
+        </div>
+
+        <div class="col-md-9" id="userList">
+
+        </div>
+    </div>
+
+    <!-- 发送消息modal   start-->
+    <div class="modal" id="messageModal" tabindx="-1" role="dialog" style="margin-top:5%;" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">发送消息</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="messageForm" class="form-horizontal" role="form" action="${base}/corp/sendMsg" method="POST">
+                        <input type="hidden" id="touser" name="touser" />
+                        <input type="hidden" id="toparty" name="toparty" />
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">收信人</label>
+                            <div class="col-sm-6">
+                                <label class="control-label"><span id="toName"></span></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+                            <label class="col-sm-3 control-label">消息内容</label>
+                            <div class="col-sm-6">
+                                <textarea rows="" cols="" id="message" name="message" class="form-control"></textarea>
+                                <span class="help-block">不能为空</span>
+                            </div>
+                        </div>
+
+                        <div id="_osAlertTipMsg"></div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button"  class="btn btn-primary" onclick="doSend()">发送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 发送消息modal   end-->
+
+    <!-- 添加/修改部门modal-->
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" style="margin-top:5%;" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">添加/修改部门</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="myForm" class="form-horizontal" role="form" action="${base}/corp/deptmerge" method="POST">
+                        <input type="hidden" id="deptId" name="deptId"/>
+                        <input type="hidden" id="type" name="type"/>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">部门名称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="name" name="name" type="text">
+                            </div>
+                            <span class="help-block">不能为空</span>
+                        </div>
+                        <div class="form-group" id="parentDeptGroup">
+                            <label class="col-sm-2 control-label">上级部门</label>
+                            <div class="col-sm-6">
+                                <label class="control-label"><span id="selectedNameDept"></span></label>
+                            </div>
+                        </div>
+                        <div id="_osAlertTip"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="doSubmit()">保存</button>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!-- 添加/修改部门modal  end-->
+
+</div>
+
+<script type="text/javascript">
+    $('#departmentTree').treed({
+		openedClass : 'glyphicon-folder-open',
+		closedClass : 'glyphicon-folder-close',
+		opened: true
+	});
+
+	function loadUser(id,name){
+	    $('#selectedId').val(id);
+	    $('#selectedName').val(name);
+	    $('#selectedNameDept').val(name);
+	    var url = '${base}/corp/getUsers?deptId=' + id;
+	    $('#userList').load(url, function(){});
+	}
+
+	function toSendMsg(){
+        $('#messageModal').modal();
+        var chk_value = [];
+        $('input[name="userid"]:checked').each(function(){
+            chk_value.push($(this).val());
+        });
+        if(chk_value&&chk_value.length>0){
+            $('#toName').html(chk_value.join(','));
+        }else{
+            $('#toName').html($('#selectedName').val());
+        }
+	}
+
+	function doSend(){
+	    var chk_value = [];
+        $('input[name="userid"]:checked').each(function(){
+            chk_value.push($(this).val());
+        });
+        if(chk_value&&chk_value.length>0){
+            $('#touser').val(chk_value.join('|'));
+        }else{
+           $('#toparty').val($('#selectedId').val());
+        }
+        var message = $('#message').val();
+        if(_os.isEmpty(message)){
+            Modal.tipSuccess('消息不能为空','_osAlertTipMsg');//提示失败
+            return;
+        }
+        $('#messageForm').ajaxSubmit({
+            datatyep: "json",
+            success: function(resp){
+                var resp = $.parseJSON(resp);
+                if(resp.errcode == 0){
+                    Modal.tipSuccess('发送成功','_osAlertTipMsg');//提示成功
+                }else{
+                    Modal.tipSuccess('保存失败','_osAlertTipMsg');//提示失败
+                }
+            },
+            error: function(xhr){
+                 Modal.tipSuccess('保存成功','_osAlertTipMsg');//提示失败
+            }
+        });
+	}
+
+	//添加|修改部门
+	function addDept(){
+		$('#type').val(1);//添加
+		$('#parentDeptGroup').show();
+		$('#selectedNameDept').html($('#selectedName').val())
+		$('#myModal').modal();
+	}
+	function editDept(){
+		$('#type').val(2);//修改
+		$('#parentDeptGroup').hide();
+		$('#name').val($('#selectedName').val())
+		$('#myModal').modal();
+	}
+
+	function doSubmit(){
+		var deptId = $('#selectedId').val();
+		$('#deptId').val(deptId);
+		if(_os.isEmpty(deptId)){
+			Modal.tipFailure("请先选择部门");
+			return;
+		}
+		var name = $('#name').val();
+		if(_os.isEmpty(name)){
+			Modal.tipFailure("部门名称不能为空");
+			return;
+		}
+		$('#myForm').ajaxSubmit({
+			datatype : 'json',
+			success : function(resp) {
+				var resp = $.parseJSON(resp);
+				if (resp.errcode == 0) {
+					Modal.tipSuccess("添加成功");//失败提示
+				} else {
+					Modal.tipFailure(resp.message);//失败提示
+				}
+			},
+			error: function(){
+				Modal.tipFailure('保存失败');
+            }
+		});
+	}
+
+	//将企业微信部门结构同步到本地数据库
+	function syncDept(){
+		$.ajax({
+			url:'${base}/corp/syncDepartment',
+		    type:'POST',
+		    dataType:'json',
+		    success:function(resp){
+		    	var errcode = resp.errcode;
+		    	if(errcode == 0){
+		    		Modal.alert("所有部门已同步到本地数据库");
+		    	}else{
+		    		Modal.alert(resp.message);
+		    	}
+		    }
+		});
+	}
+
+    function syncCorpUser(userid){
+        $.ajax({
+            url:'${base}/corp/syncCorpUser',
+            type:'POST',
+            dataType:'JSON',
+            data:{'userid':userid},
+            success: function(resp){
+                var errcode = resp.errcode;
+		    	if(errcode == 0){
+		    		Modal.alert("同步成功");
+		    	}else{
+		    		Modal.alert(resp.message);
+		    	}
+            }
+        });
+    }
+
+
+</script>
+
+</@override>
+
+<!-- extends 一定要写在页面最下方 -->
+<@extends name="_base.html"/>

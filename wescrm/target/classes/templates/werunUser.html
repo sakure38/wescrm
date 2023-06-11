@@ -1,0 +1,60 @@
+
+<@override name="content">
+<div class="panel panel-default ux-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">步数榜单</h3>
+    </div>
+    
+    <div class="panel-body">
+    	<form id="_queryPageForm">
+    		<div class="ux-table-div">
+		        <table class="table table-condensed">
+				  <thead>
+				    <tr>
+				      <th>客户名</th>
+				      <th>客户openid</th>
+				      <th>步数</th>
+				      <th>创建时间</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	<#if (page.items)??>
+						<#list page.items as item>
+						<tr>
+							<td>${item.customerName!}</td>
+							<td>${item.openid!}</td>
+							<td>${(item.steps)!}</td>
+							<td>
+							<#if (item.createAt)??>
+							${item.createAt?string('yyyy-MM-dd HH:mm')}
+							</#if>
+							</td>
+						</tr>
+						</#list>
+					</#if>
+				  </tbody>
+				</table>
+			</div>
+			<#if (page.pageTotalCount)?? && page.pageTotalCount gt 1>
+			<ul class="pagination">
+				<input type="hidden" id="_id_pageNum" name="pageNum" value="${page.pageNum}"/>
+			    <#list page.showNums as n>
+					<#if page.showDot && n_index == 6>
+					<li class="disabled"><a href="javascript:void(0)">...</a></li>
+					</#if>
+					<#if page.pageNum == n>
+					<li class="active"><a href="javascript:void(0);">${n}</a></li>
+					<#else>
+					<li><a href="javascript:void(0);" onclick="_queryPage('${n}');">${n}</a></li>
+					</#if>
+				</#list>
+			</ul>
+			</#if>
+		</form>
+		
+    </div>
+</div>
+
+</@override>
+<@extends name="_base.html" />
+

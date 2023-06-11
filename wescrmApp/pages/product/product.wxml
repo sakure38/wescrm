@@ -1,0 +1,52 @@
+
+<view class="container">
+<block wx:if="{{product}}">
+  <image src="{{contextUrl}}/file/attachment/{{product.picture}}/l" class="full-image" mode="scaleToFill"></image>
+
+  <view class="name">
+    <view class="desc">{{product.description}}</view>
+    <view class="title">{{product.name}}</view>
+    <view class="price">￥{{product.price}}元</view>
+  </view>
+</block>
+
+
+<view class="tab">
+  <view class="tab-item">
+    <image src="../../images/icon/p-peifu.png" mode="widthFix"></image>
+    <text>品质保障</text>
+  </view>
+  <view class="tab-item">
+      <image src="../../images/icon/p-ciri.png" mode="widthFix"/>
+      <text>次日达</text>
+  </view>
+  <view class="tab-item">
+    <image src="../../images/icon/p-suyun.png" mode="widthFix"/>
+    <text>极速物流</text>
+  </view>
+  <view class="tab-item">
+    <image src="../../images/icon/p-tuihuan.png" mode="widthFix"/>
+    <text>无理由退换货</text>
+  </view>
+</view>
+
+<view class="product-count">
+  <view class="title">选择数量：</view>
+  <view class="count-select">
+    <view id="1" bindtap="changeCount" class="s-item {{count ==1?'active':''}} ">1份</view>
+    <view id="2" bindtap="changeCount" class="s-item {{count ==2?'active':''}} ">2份</view>
+    <view id="3" bindtap="changeCount" class="s-item {{count ==3?'active':''}} ">3份</view>
+    <view id="4" bindtap="changeCount" class="s-item {{count ==4?'active':''}} ">4份</view>
+  </view>
+</view>
+
+<block wx:if="{{product}}">
+  <view class="detail">
+    <image wx:if="{{product.mainPicture}}" src="{{contextUrl}}/file/attachment/{{product.mainPicture}}/l" mode="widthFix"></image>
+  </view>
+</block>
+
+<view style="height:100rpx;"></view>
+<view class="buy" bindtap="quickBuy">立即订购</view>
+</view>
+

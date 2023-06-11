@@ -1,0 +1,106 @@
+
+<#assign base=springMacroRequestContext.getContextUrl("") />
+
+<!DOCTYPE html>
+<html lang="utf-8">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>SCRM-后台管理</title>
+
+    <!--css / js-->
+    <!-- 引入资源文件 -->
+    <link href="${base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${base}/res/css/bootstrap-treeview.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${base}/res/css/style.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${base}/res/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="${base}/res/js/jquery.form.js"></script>
+    <script type="text/javascript" src="${base}/res/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${base}/res/js/bootstrap-treeview.min.js"></script>
+    <script type="text/javascript" src="${base}/res/3rdparty/laydate/laydate.js"></script>
+    <script type="text/javascript" src="${base}/res/js/scrm.min.js"></script>
+    <script type="text/javascript" src="${base}/res/js/sha256.js"></script>
+    <script type="text/javascript" src="${base}/res/3rdparty/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="${base}/res/3rdparty/echarts/echarts.common.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container ux-container" style="padding-top:120px;">
+        <div class="panel panel-default ux-panel" style="width:500px; margin:0 auto; padding:20px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">用户登录 admin / admin123</h3>
+            </div>
+
+            <div class="panel-body">
+                <form form class="form-horizontal" role="form" id="loginForm" method="post" action="${base}/login">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label ux-form-label">用户名</label>
+                        <div class="col-sm-10">
+                            <input id="username" name="username" type="text"  class="form-control"  placeholder="请输入用户名" ></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group clearfix">
+                        <label class="col-sm-2 control-label ux-form-label">密码</label>
+                        <div class="col-sm-10">
+                            <input id="password" type="password" class="form-control" placeholder="请输入密码" autocomplete="new-password" />
+                            <input type="hidden" id="hashPasswd" name="password"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group clearfix">
+                        <label class="col-sm-2 control-label ux-form-label">验证码</label>
+                        <div class="col-sm-10">
+                            <input id="identiryCode" name="identiryCode" maxlength="6" class="form-control" type="text" style="float:left;width:150px;" placeholder="请输入验证码"/>
+                            <a style="display:inline-block;">
+                                <img class="indeity-code" onclick="reloadIdCode();" id="identiryCodeImg"  src="${base}/idcode" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <#if errmsg??>
+                        <div id="_osAlertTip" class="alert alert-warning ux-alert">${errmsg!}</div>
+                        <#else>
+                        <div id="_osAlertTip"></div>
+                    </#if>
+
+                    <div class="modal-footer" style="text-align: center;margin-top:20px;">
+                        <input type="button" onclick="doLogin()" class="btn btn-primary" style="width:100px;" value="登 录"></input>
+                    </div>
+                </form>
+            </div><!-- panel-body end -->
+        </div><!-- panel end -->
+    </div>
+</body>
+
+<script type="text/javascript">
+    function reloadIdCode(){
+        $('#identiryCodeImg').attr('src', '${base}/idcode?t=' + Math.random());
+    }
+    function doLogin(){
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var idcode = $('#identiryCode').val();
+
+        if(username == ""){
+            Modal.tipFailure("用户名不能为空");
+            return;
+        }
+        if(password == "" || password.length < 6){
+            Modal.tipFailure("密码至少6位");
+            return;
+        }
+        if(identiryCode == ""){
+            Modal.tipFailure("验证码不能为空");
+            return;
+        }
+        $('#hashPasswd').val(sha256.hmac(username, password));
+        $('#loginForm').submit();
+    }
+</script>
+
+</html>

@@ -1,0 +1,43 @@
+
+<view class="container">
+  <view class="user-header">
+    <open-data class="user-avatar" type="userAvatarUrl"></open-data>
+  </view>
+
+  <view class="form-panel">
+    <form bindsubmit='doSubmit'>
+      <view class="form-group">
+        <text class="form-label">提现：</text>
+        <input class="form-control" name="total" value="{{totalMoney}}" type="number"/>
+      </view>
+      
+      <view class="form-group">
+        <text class="form-label">可提金额：</text>
+        <text class="control-label" style="width:400rpx;">余额：{{userInfo.money}} ，佣金：{{userInfo.rebateMoney}}</text>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">银行：</text>
+        <text class="control-label">{{userInfo.bank}}</text>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">银行卡号：</text>
+        <text class="control-label">{{userInfo.bankNo}}</text>
+      </view>
+
+      <view style="margin-top:50rpx;">
+        <button type="primary" form-type="submit" style="width:100%">提 现</button>
+      </view>
+
+    </form>
+  </view>
+  
+  <view class="tips">
+      <text>这里可以放企业微信二维码</text>
+    </view>
+  <view class="tips">
+    <text>可以设置成为加上方企业微信好友，成为会员才可提现，从而增加私域客户</text>
+  </view>  
+    
+</view>
